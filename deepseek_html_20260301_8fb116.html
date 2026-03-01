@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Intha Learning • Dashboard Akademik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* ===== VARIABEL & RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-600: #2563EB;
+            --primary-700: #1D4ED8;
+            --primary-500: #3B82F6;
+            --primary-100: #DBEAFE;
+            --teal: #14B8A6;
+            --purple: #8B5CF6;
+            --orange: #F59E0B;
+            --success: #22C55E;
+            --success-dark: #16A34A;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --bg-soft: #F3F4F6;
+            --card-white: #FFFFFF;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border-soft: #E5E7EB;
+            --shadow-soft: rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            background: var(--bg-soft);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ===== LAYOUT FLEKSIBEL ===== */
+        .app-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+        }
+
+        /* SIDEBAR - Default mobile (tersembunyi) */
+        .sidebar {
+            width: 280px;
+            background: var(--card-white);
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 10px var(--shadow-soft);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            transform: translateX(-100%);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .sidebar {
+                transform: translateX(0);
+                position: sticky;
+                top: 0;
+            }
+            
+            .sidebar-toggle, .sidebar-overlay {
+                display: none !important;
+            }
+            
+            .main-content {
+                width: calc(100% - 280px);
+            }
+        }
+
+        /* Tombol toggle sidebar */
+        .sidebar-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-600);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1001;
+            border: none;
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .main-content {
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Menu items */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .menu-item:hover {
+            background: var(--bg-soft);
+        }
+
+        .menu-item.active {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            font-weight: 600;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-700), var(--primary-500));
+            padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1rem, 4vw, 1.5rem);
+            border-radius: 0 0 40px 40px;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(1.5rem, 6vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary, .btn-hero-secondary {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-hero-primary {
+            background: white;
+            color: var(--primary-700);
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons button {
+                width: 100%;
+            }
+        }
+
+        /* ===== MOBILE NAV ===== */
+        .mobile-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--card-white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav-item {
+            background: var(--bg-soft);
+            padding: 0.7rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .mobile-nav-item.active {
+            background: var(--primary-100);
+            color: var(--primary-700);
+        }
+
+        @media (min-width: 1024px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+
+        /* ===== CARD & GRID ===== */
+        .card-white {
+            background: var(--card-white);
+            border-radius: 24px;
+            padding: clamp(1rem, 4vw, 1.5rem);
+            box-shadow: 0 4px 15px var(--shadow-soft);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card-white);
+            border-radius: 24px;
+            padding: 1.2rem 1rem;
+            box-shadow: 0 4px 12px var(--shadow-soft);
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-icon.blue { background: var(--primary-100); color: var(--primary-700); }
+        .stat-icon.teal { background: #CCFBF1; color: var(--teal); }
+        .stat-icon.purple { background: #EDE9FE; color: var(--purple); }
+        .stat-icon.orange { background: #FEF3C7; color: var(--orange); }
+
+        .stat-number {
+            font-size: clamp(1.3rem, 5vw, 1.6rem);
+            font-weight: 700;
+        }
+
+        /* ===== SUMMARY CARD ===== */
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            border-radius: 20px;
+            padding: clamp(1rem, 4vw, 1.5rem);
+            margin-bottom: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .summary-item {
+            text-align: center;
+        }
+
+        .summary-value {
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            font-weight: 700;
+        }
+
+        /* ===== TABEL RESPONSIF ===== */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 0 -1rem;
+            padding: 0 1rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 1rem 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--border-soft);
+        }
+
+        .table td {
+            padding: 1rem 0.8rem;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        /* ===== FILTER ===== */
+        .filter-container {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.7rem 1rem;
+            border: 2px solid var(--border-soft);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            min-width: 180px;
+            background: white;
+            flex: 1 1 auto;
+        }
+
+        @media (max-width: 480px) {
+            .filter-select {
+                width: 100%;
+            }
+        }
+
+        /* ===== BADGE & STATUS ===== */
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-teal { background: #CCFBF1; color: var(--teal); }
+        .badge-purple { background: #EDE9FE; color: var(--purple); }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-lunas { background: #DCFCE7; color: var(--success-dark); }
+        .status-belum { background: #FEF3C7; color: var(--warning); }
+
+        /* ===== BUTTON ===== */
+        .btn-primary, .btn-outline, .btn-refresh {
+            padding: 0.7rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-600);
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-600);
+            color: var(--primary-600);
+        }
+
+        .btn-refresh {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-outline-small {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .btn-primary, .btn-outline, .btn-refresh {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--card-white);
+            border-radius: 32px;
+            padding: 1.5rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-control, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-soft);
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== NOTIFICATION ===== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            color: white;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+            max-width: 90%;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.success { background: var(--success); }
+        .notification.error { background: var(--danger); }
+        .notification.info { background: var(--primary-600); }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-600);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div style="padding: 0 1rem 2rem;">
+                <h2 style="color: var(--primary-700);">Intha Learning</h2>
+                <p style="color: var(--text-secondary);">Sistem Akademik</p>
+            </div>
+            
+            <div class="menu-item active" onclick="showMenu('dashboard'); if(window.innerWidth < 1024) toggleSidebar();">
+                <i class="bi bi-speedometer2"></i> Dashboard
+            </div>
+            <div class="menu-item" onclick="showMenu('absensi'); if(window.innerWidth < 1024) toggleSidebar();">
+                <i class="bi bi-calendar-check"></i> Absensi
+            </div>
+            <div class="menu-item" onclick="showMenu('tentor'); if(window.innerWidth < 1024) toggleSidebar();">
+                <i class="bi bi-people"></i> Database Tentor
+            </div>
+            <div class="menu-item" onclick="showMenu('murid'); if(window.innerWidth < 1024) toggleSidebar();">
+                <i class="bi bi-person-video2"></i> Database Murid
+            </div>
+            <div class="menu-item" onclick="showMenu('pembayaran'); if(window.innerWidth < 1024) toggleSidebar();">
+                <i class="bi bi-cash-coin"></i> Rekap Tagihan
+            </div>
+        </div>
+
+        <!-- Tombol Toggle Sidebar -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Hero -->
+            <div class="hero-gradient">
+                <h1 class="hero-title">Intha Learning</h1>
+                <p class="hero-subtitle">Sistem Informasi Akademik • Terintegrasi Google Sheet</p>
+                <div class="hero-buttons">
+                    <button class="btn-hero-primary" onclick="showMenu('dashboard')">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </button>
+                    <button class="btn-hero-secondary" onclick="refreshAllData()">
+                        <i class="bi bi-arrow-repeat"></i> Refresh Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav">
+                <div class="mobile-nav-item active" onclick="showMenu('dashboard')">
+                    <i class="bi bi-speedometer2"></i> Dashboard
+                </div>
+                <div class="mobile-nav-item" onclick="showMenu('absensi')">
+                    <i class="bi bi-calendar-check"></i> Absensi
+                </div>
+                <div class="mobile-nav-item" onclick="showMenu('tentor')">
+                    <i class="bi bi-people"></i> Tentor
+                </div>
+                <div class="mobile-nav-item" onclick="showMenu('murid')">
+                    <i class="bi bi-person-video2"></i> Murid
+                </div>
+                <div class="mobile-nav-item" onclick="showMenu('pembayaran')">
+                    <i class="bi bi-cash-coin"></i> Tagihan
+                </div>
+            </div>
+
+            <!-- Dynamic Content -->
+            <div id="mainContent">
+                <div style="text-align: center; padding: 50px;">
+                    <div class="loading"></div>
+                    <p style="margin-top: 20px;">Memuat data dari Google Sheet...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="formModal">
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <script>
+        // ===== KONFIGURASI =====
+        const SPREADSHEET_ID = '1lb0uDDGrV9bynYTvVP6Z3Hv8Elx8plTNW9YF6hC8ijk';
+        const TENTOR_GID = '1614071388';
+        const MURID_GID = '1589795769';
+        const ABSENSI_GID = '922839257';
+        
+        const TENTOR_CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${TENTOR_GID}`;
+        const MURID_CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${MURID_GID}`;
+        const ABSENSI_CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${ABSENSI_GID}`;
+
+        // ===== STATE =====
+        let dataTentor = [];
+        let dataMurid = [];
+        let dataAbsensi = [];
+        let filteredAbsensi = [];
+        let dataTagihan = [];
+        let selectedMonth = 'all';
+        let tagihanFilterMonth = 'all';
+        let availableMonths = [];
+        let isLoading = false;
+
+        // ===== SIDEBAR TOGGLE =====
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // ===== UTILITY =====
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                if (char === '"') inQuotes = !inQuotes;
+                else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else current += char;
+            }
+            result.push(current);
+            return result.map(val => val.replace(/^"|"$/g, '').trim());
+        }
+
+        function cleanNominal(str) {
+            if (!str) return 0;
+            return parseInt(str.toString().replace(/[^\d]/g, '')) || 0;
+        }
+
+        function showNotification(message, type = 'info') {
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            const notif = document.createElement('div');
+            notif.className = `notification ${type}`;
+            notif.innerText = message;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+
+        function formatRupiah(angka) {
+            if (!angka) return 'Rp 0';
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR', 
+                minimumFractionDigits: 0 
+            }).format(angka);
+        }
+
+        function formatTanggal(tanggal) {
+            if (!tanggal || tanggal === '-') return '-';
+            try {
+                const d = new Date(tanggal);
+                if (isNaN(d.getTime())) return tanggal;
+                return d.toLocaleDateString('id-ID', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric' 
+                });
+            } catch {
+                return tanggal;
+            }
+        }
+
+        function formatBulan(bulanStr) {
+            if (!bulanStr || bulanStr === '-') return '-';
+            try {
+                const [year, month] = bulanStr.split('-');
+                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                return `${monthNames[parseInt(month)-1]} ${year}`;
+            } catch {
+                return bulanStr;
+            }
+        }
+
+        // ===== LOAD DATA =====
+        async function loadTentorFromSheet() {
+            try {
+                const response = await fetch(TENTOR_CSV_URL);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const csv = await response.text();
+                const lines = csv.split('\n').filter(l => l.trim());
+                if (lines.length < 2) return [];
+                
+                const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+                const namaIdx = headers.findIndex(h => h.includes('nama tentor') || h.includes('nama'));
+                const tarifIdx = headers.findIndex(h => h.includes('tarif') || h.includes('sesi'));
+                const rekeningIdx = headers.findIndex(h => h.includes('rekening'));
+                const alamatIdx = headers.findIndex(h => h.includes('alamat'));
+                const catatanIdx = headers.findIndex(h => h.includes('catatan'));
+                const muridIdx = headers.findIndex(h => h.includes('murid'));
+                
+                const tentorList = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = parseCSVLine(lines[i]);
+                    tentorList.push({
+                        id: i,
+                        nama: (namaIdx !== -1 && cols[namaIdx]) || `Tentor-${i}`,
+                        tarif: (tarifIdx !== -1 && cols[tarifIdx]) ? cleanNominal(cols[tarifIdx]) : 0,
+                        rekening: (rekeningIdx !== -1 && cols[rekeningIdx]) || '-',
+                        alamat: (alamatIdx !== -1 && cols[alamatIdx]) || '-',
+                        catatan: (catatanIdx !== -1 && cols[catatanIdx]) || '-',
+                        murid: (muridIdx !== -1 && cols[muridIdx]) || '-'
+                    });
+                }
+                return tentorList;
+            } catch (error) {
+                console.error('Error loading tentor:', error);
+                return [];
+            }
+        }
+
+        async function loadMuridFromSheet() {
+            try {
+                const response = await fetch(MURID_CSV_URL);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const csv = await response.text();
+                const lines = csv.split('\n').filter(l => l.trim());
+                if (lines.length < 2) return [];
+                
+                const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+                const namaIdx = headers.findIndex(h => h.includes('nama murid') || h.includes('nama'));
+                const kelasIdx = headers.findIndex(h => h.includes('kelas'));
+                const alamatIdx = headers.findIndex(h => h.includes('alamat'));
+                const biayaIdx = headers.findIndex(h => h.includes('biaya'));
+                const feeIdx = headers.findIndex(h => h.includes('management fee') || h.includes('fee'));
+                const nomorIdx = headers.findIndex(h => h.includes('nomor orang tua') || h.includes('telepon'));
+                const tentorIdx = headers.findIndex(h => h.includes('tentor'));
+                
+                const muridList = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = parseCSVLine(lines[i]);
+                    let fee = 0;
+                    if (feeIdx !== -1 && cols[feeIdx]) {
+                        fee = parseFloat(cols[feeIdx].toString().replace('%', '')) || 0;
+                    }
+                    
+                    muridList.push({
+                        id: i,
+                        nama: (namaIdx !== -1 && cols[namaIdx]) || `Murid-${i}`,
+                        kelas: (kelasIdx !== -1 && cols[kelasIdx]) || '-',
+                        alamat: (alamatIdx !== -1 && cols[alamatIdx]) || '-',
+                        biaya: (biayaIdx !== -1 && cols[biayaIdx]) ? cleanNominal(cols[biayaIdx]) : 0,
+                        managementFee: fee,
+                        nomorOrtu: (nomorIdx !== -1 && cols[nomorIdx]) || '-',
+                        tentor: (tentorIdx !== -1 && cols[tentorIdx]) || '-'
+                    });
+                }
+                return muridList;
+            } catch (error) {
+                console.error('Error loading murid:', error);
+                return [];
+            }
+        }
+
+        async function loadAbsensiFromSheet() {
+            try {
+                const response = await fetch(ABSENSI_CSV_URL);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                const csv = await response.text();
+                const lines = csv.split('\n').filter(l => l.trim());
+                if (lines.length < 2) return [];
+                
+                const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase());
+                const tentorIdx = headers.findIndex(h => h.includes('nama tentor'));
+                const tipeIdx = headers.findIndex(h => h.includes('tipe les'));
+                const muridIdx = headers.findIndex(h => h.includes('nama murid'));
+                const tanggalIdx = headers.findIndex(h => h.includes('tanggal'));
+                const kendalaIdx = headers.findIndex(h => h.includes('kendala'));
+                
+                const absensiList = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = parseCSVLine(lines[i]);
+                    absensiList.push({
+                        id: i,
+                        namaTentor: (tentorIdx !== -1 && cols[tentorIdx]) || '-',
+                        tipeLes: (tipeIdx !== -1 && cols[tipeIdx]) || '-',
+                        namaMurid: (muridIdx !== -1 && cols[muridIdx]) || '-',
+                        tanggal: (tanggalIdx !== -1 && cols[tanggalIdx]) || '-',
+                        kendala: (kendalaIdx !== -1 && cols[kendalaIdx]) || '-'
+                    });
+                }
+                
+                absensiList.sort((a, b) => {
+                    if (a.tanggal === '-' || b.tanggal === '-') return 0;
+                    return new Date(b.tanggal) - new Date(a.tanggal);
+                });
+                
+                return absensiList;
+            } catch (error) {
+                console.error('Error loading absensi:', error);
+                return [];
+            }
+        }
+
+        // ===== GENERATE TAGIHAN =====
+        function generateTagihan() {
+            const tagihanMap = new Map();
+            
+            dataAbsensi.forEach(absensi => {
+                if (!absensi.tanggal || absensi.tanggal === '-') return;
+                
+                let bulan = 'Unknown';
+                try {
+                    const date = new Date(absensi.tanggal);
+                    if (isNaN(date.getTime())) return;
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    bulan = `${year}-${month}`;
+                } catch {
+                    return;
+                }
+                
+                const murid = dataMurid.find(m => m.nama === absensi.namaMurid);
+                if (!murid) return;
+                
+                const key = `${absensi.namaMurid}|${absensi.namaTentor}|${bulan}`;
+                
+                if (!tagihanMap.has(key)) {
+                    tagihanMap.set(key, {
+                        id: key,
+                        namaMurid: absensi.namaMurid,
+                        namaTentor: absensi.namaTentor,
+                        bulan: bulan,
+                        jumlahSesi: 0,
+                        biayaPerSesi: murid.biaya,
+                        managementFee: murid.managementFee,
+                        status: 'Belum Dibayar'
+                    });
+                }
+                
+                const tagihan = tagihanMap.get(key);
+                tagihan.jumlahSesi++;
+            });
+            
+            const tagihanArray = [];
+            tagihanMap.forEach((value) => {
+                const totalSebelumFee = value.jumlahSesi * value.biayaPerSesi;
+                const feeAmount = Math.round(totalSebelumFee * (value.managementFee / 100));
+                const totalSetelahFee = totalSebelumFee - feeAmount;
+                
+                tagihanArray.push({
+                    ...value,
+                    totalSebelumFee,
+                    feeAmount,
+                    totalSetelahFee
+                });
+            });
+            
+            tagihanArray.sort((a, b) => b.bulan.localeCompare(a.bulan));
+            dataTagihan = tagihanArray;
+        }
+
+        // ===== FILTER =====
+        function generateAvailableMonths() {
+            const months = new Set();
+            dataAbsensi.forEach(item => {
+                if (item.tanggal && item.tanggal !== '-') {
+                    try {
+                        const date = new Date(item.tanggal);
+                        if (!isNaN(date.getTime())) {
+                            const year = date.getFullYear();
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            months.add(`${year}-${month}`);
+                        }
+                    } catch {}
+                }
+            });
+            availableMonths = Array.from(months).sort().reverse();
+        }
+
+        function filterAbsensiByMonth() {
+            if (selectedMonth === 'all') {
+                filteredAbsensi = [...dataAbsensi];
+            } else {
+                filteredAbsensi = dataAbsensi.filter(item => {
+                    if (!item.tanggal || item.tanggal === '-') return false;
+                    try {
+                        const date = new Date(item.tanggal);
+                        if (isNaN(date.getTime())) return false;
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        return `${year}-${month}` === selectedMonth;
+                    } catch {
+                        return false;
+                    }
+                });
+            }
+            renderAbsensiTable();
+        }
+
+        function getFilteredTagihan() {
+            if (tagihanFilterMonth === 'all') return dataTagihan;
+            return dataTagihan.filter(t => t.bulan === tagihanFilterMonth);
+        }
+
+        function getTagihanSummary() {
+            const filtered = getFilteredTagihan();
+            let totalSesi = 0, totalSebelumFee = 0, totalFee = 0, totalSetelahFee = 0, totalBelum = 0;
+            
+            filtered.forEach(t => {
+                totalSesi += t.jumlahSesi;
+                totalSebelumFee += t.totalSebelumFee;
+                totalFee += t.feeAmount;
+                totalSetelahFee += t.totalSetelahFee;
+                if (t.status === 'Belum Dibayar') totalBelum += t.totalSetelahFee;
+            });
+            
+            return { totalSesi, totalSebelumFee, totalFee, totalSetelahFee, totalBelum, totalTagihan: filtered.length };
+        }
+
+        // ===== REFRESH DATA =====
+        async function refreshAllData() {
+            if (isLoading) return;
+            isLoading = true;
+            showNotification('🔄 Mengambil data...', 'info');
+            
+            try {
+                const [tentor, murid, absensi] = await Promise.all([
+                    loadTentorFromSheet(),
+                    loadMuridFromSheet(),
+                    loadAbsensiFromSheet()
+                ]);
+                
+                dataTentor = tentor;
+                dataMurid = murid;
+                dataAbsensi = absensi;
+                filteredAbsensi = [...absensi];
+                
+                generateAvailableMonths();
+                generateTagihan();
+                
+                showNotification('✅ Data berhasil di-refresh', 'success');
+                
+                const activeMenu = document.querySelector('.menu-item.active')?.innerText.trim().toLowerCase() || 'dashboard';
+                showMenu(activeMenu);
+            } catch (error) {
+                showNotification('❌ Gagal: ' + error.message, 'error');
+            } finally {
+                isLoading = false;
+            }
+        }
+
+        // ===== NAVIGASI =====
+        function showMenu(menu) {
+            document.querySelectorAll('.menu-item, .mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.innerText.toLowerCase().includes(menu)) item.classList.add('active');
+            });
+            renderMenuContent(menu);
+        }
+
+        async function renderMenuContent(menu) {
+            const mainContent = document.getElementById('mainContent');
+            mainContent.innerHTML = `<div style="text-align:center;padding:50px;"><div class="loading"></div><p>Memuat...</p></div>`;
+            
+            try {
+                let html = '';
+                if (menu === 'tentor') html = renderTentor();
+                else if (menu === 'murid') html = renderMurid();
+                else if (menu === 'absensi') html = renderAbsensi();
+                else if (menu === 'dashboard') html = renderDashboard();
+                else if (menu === 'pembayaran') html = renderPembayaran();
+                
+                mainContent.innerHTML = html;
+                
+                if (menu === 'absensi') setupAbsensiFilters();
+                else if (menu === 'pembayaran') setupTagihanFilters();
+            } catch (error) {
+                mainContent.innerHTML = `<div class="card-white" style="text-align:center;color:var(--danger);">Error: ${error.message}</div>`;
+            }
+        }
+
+        // ===== RENDER FUNCTIONS =====
+        function renderDashboard() {
+            const summary = getTagihanSummary();
+            return `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon blue"><i class="bi bi-people"></i></div><div class="stat-number">${dataTentor.length}</div><div class="stat-label">Total Tentor</div></div>
+                    <div class="stat-card"><div class="stat-icon teal"><i class="bi bi-person-video2"></i></div><div class="stat-number">${dataMurid.length}</div><div class="stat-label">Total Murid</div></div>
+                    <div class="stat-card"><div class="stat-icon purple"><i class="bi bi-calendar-check"></i></div><div class="stat-number">${dataAbsensi.length}</div><div class="stat-label">Total Absensi</div></div>
+                    <div class="stat-card"><div class="stat-icon orange"><i class="bi bi-cash-coin"></i></div><div class="stat-number">${dataTagihan.filter(t => t.status === 'Belum Dibayar').length}</div><div class="stat-label">Tagihan Aktif</div></div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-item"><div class="summary-label">Total Tagihan</div><div class="summary-value">${dataTagihan.length}</div></div>
+                    <div class="summary-item"><div class="summary-label">Total Sesi</div><div class="summary-value">${summary.totalSesi}</div></div>
+                    <div class="summary-item"><div class="summary-label">Pendapatan</div><div class="summary-value">${formatRupiah(summary.totalSetelahFee)}</div></div>
+                    <div class="summary-item"><div class="summary-label">Belum Dibayar</div><div class="summary-value" style="color:#F59E0B;">${formatRupiah(summary.totalBelum)}</div></div>
+                </div>
+
+                <div class="card-white">
+                    <div class="card-header"><h3 class="card-title"><i class="bi bi-clock-history"></i> Tagihan Terbaru</h3><button class="btn-refresh" onclick="showMenu('pembayaran')">Lihat Semua</button></div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Bulan</th><th>Murid</th><th>Tentor</th><th>Sesi</th><th>Total</th><th>Status</th></tr></thead>
+                            <tbody>${dataTagihan.slice(0, 5).map(t => `
+                                <tr><td>${formatBulan(t.bulan)}</td><td>${t.namaMurid}</td><td>${t.namaTentor}</td><td>${t.jumlahSesi} sesi</td><td>${formatRupiah(t.totalSetelahFee)}</td><td><span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span></td></tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTentor() {
+            return `
+                <div class="card-white">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-people"></i> Database Tentor</h3>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <button class="btn-primary" onclick="showTambahTentorForm()"><i class="bi bi-plus-circle"></i> Tambah Tentor</button>
+                            <button class="btn-refresh" onclick="refreshAllData()"><i class="bi bi-arrow-repeat"></i> Sync</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Nama Tentor</th><th>Tarif/Sesi</th><th>Rekening</th><th>Alamat</th><th>Catatan</th><th>Murid</th></tr></thead>
+                            <tbody>${dataTentor.map(t => `
+                                <tr><td><strong>${t.nama}</strong></td><td>${formatRupiah(t.tarif)}</td><td>${t.rekening}</td><td>${t.alamat}</td><td>${t.catatan}</td><td>${t.murid}</td></tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMurid() {
+            return `
+                <div class="card-white">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-person-video2"></i> Database Murid</h3>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <button class="btn-primary" onclick="showTambahMuridForm()"><i class="bi bi-plus-circle"></i> Tambah Murid</button>
+                            <button class="btn-refresh" onclick="refreshAllData()"><i class="bi bi-arrow-repeat"></i> Sync</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Nama Murid</th><th>Kelas</th><th>Alamat</th><th>Biaya</th><th>Fee</th><th>No.Orang Tua</th><th>Tentor</th></tr></thead>
+                            <tbody>${dataMurid.map(m => `
+                                <tr>
+                                    <td><strong>${m.nama}</strong></td>
+                                    <td>${m.kelas}</td>
+                                    <td>${m.alamat}</td>
+                                    <td>${formatRupiah(m.biaya)}</td>
+                                    <td>${m.managementFee}%</td>
+                                    <td>${m.nomorOrtu}</td>
+                                    <td>${m.tentor}</td>
+                                </tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAbsensi() {
+            const monthOptions = availableMonths.map(month => {
+                const [y, m] = month.split('-');
+                const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                return `<option value="${month}">${monthNames[parseInt(m)-1]} ${y}</option>`;
+            }).join('');
+            
+            return `
+                <div class="card-white">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-calendar-check"></i> Data Absensi</h3>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <button class="btn-primary" onclick="showTambahAbsensiForm()"><i class="bi bi-plus-circle"></i> Absensi Baru</button>
+                            <button class="btn-refresh" onclick="refreshAllData()"><i class="bi bi-arrow-repeat"></i> Sync</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-container">
+                        <select class="filter-select" id="month-filter">
+                            <option value="all">📅 Semua Bulan</option>
+                            ${monthOptions}
+                        </select>
+                        <div>${filteredAbsensi.length} data</div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr><th>Tanggal</th><th>Tentor</th><th>Tipe Les</th><th>Murid</th><th>Kendala</th></tr></thead>
+                            <tbody id="absensi-table-body">
+                                ${filteredAbsensi.map(a => `
+                                    <tr><td>${formatTanggal(a.tanggal)}</td><td>${a.namaTentor}</td><td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td><td>${a.namaMurid}</td><td>${a.kendala}</td></tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPembayaran() {
+            const tagihanMonths = [...new Set(dataTagihan.map(t => t.bulan))].sort().reverse();
+            const monthOptions = tagihanMonths.map(month => {
+                const [y, m] = month.split('-');
+                const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                return `<option value="${month}">${monthNames[parseInt(m)-1]} ${y}</option>`;
+            }).join('');
+            
+            const filtered = getFilteredTagihan();
+            const summary = getTagihanSummary();
+            
+            return `
+                <div class="card-white">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="bi bi-cash-coin"></i> Rekap Tagihan</h3>
+                        <button class="btn-refresh" onclick="refreshAllData()"><i class="bi bi-arrow-repeat"></i> Hitung Ulang</button>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-item"><div class="summary-label">Total Tagihan</div><div class="summary-value">${summary.totalTagihan}</div></div>
+                        <div class="summary-item"><div class="summary-label">Total Sesi</div><div class="summary-value">${summary.totalSesi}</div></div>
+                        <div class="summary-item"><div class="summary-label">Pendapatan</div><div class="summary-value">${formatRupiah(summary.totalSetelahFee)}</div></div>
+                        <div class="summary-item"><div class="summary-label">Belum Dibayar</div><div class="summary-value" style="color:#F59E0B;">${formatRupiah(summary.totalBelum)}</div></div>
+                    </div>
+                    
+                    <div class="filter-container">
+                        <select class="filter-select" id="tagihan-month-filter">
+                            <option value="all">📅 Semua Bulan</option>
+                            ${monthOptions}
+                        </select>
+                        <div>${filtered.length} tagihan</div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr><th>Bulan</th><th>Murid</th><th>Tentor</th><th>Sesi</th><th>Biaya/Sesi</th><th>Total</th><th>Fee</th><th>After Fee</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                ${filtered.map(t => `
+                                    <tr>
+                                        <td><strong>${formatBulan(t.bulan)}</strong></td>
+                                        <td>${t.namaMurid}</td>
+                                        <td>${t.namaTentor}</td>
+                                        <td>${t.jumlahSesi}</td>
+                                        <td>${formatRupiah(t.biayaPerSesi)}</td>
+                                        <td>${formatRupiah(t.totalSebelumFee)}</td>
+                                        <td>${formatRupiah(t.feeAmount)}</td>
+                                        <td><strong>${formatRupiah(t.totalSetelahFee)}</strong></td>
+                                        <td><span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== SETUP FILTERS =====
+        function setupAbsensiFilters() {
+            const filter = document.getElementById('month-filter');
+            if (filter) {
+                filter.value = selectedMonth;
+                filter.addEventListener('change', (e) => {
+                    selectedMonth = e.target.value;
+                    filterAbsensiByMonth();
+                });
+            }
+        }
+
+        function setupTagihanFilters() {
+            const filter = document.getElementById('tagihan-month-filter');
+            if (filter) {
+                filter.value = tagihanFilterMonth;
+                filter.addEventListener('change', (e) => {
+                    tagihanFilterMonth = e.target.value;
+                    renderMenuContent('pembayaran');
+                });
+            }
+        }
+
+        function renderAbsensiTable() {
+            const tbody = document.getElementById('absensi-table-body');
+            if (!tbody) return;
+            
+            if (!filteredAbsensi.length) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Tidak ada data</td></tr>`;
+                return;
+            }
+            
+            tbody.innerHTML = filteredAbsensi.map(a => `
+                <tr><td>${formatTanggal(a.tanggal)}</td><td>${a.namaTentor}</td><td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td><td>${a.namaMurid}</td><td>${a.kendala}</td></tr>
+            `).join('');
+        }
+
+        // ===== FORMS =====
+        function showTambahTentorForm() {
+            document.getElementById('modalContent').innerHTML = `
+                <div class="modal-header"><h3>Tambah Tentor</h3><button class="modal-close" onclick="hideModal()">×</button></div>
+                <form onsubmit="event.preventDefault(); saveTambahTentor()">
+                    <div class="form-group"><label>Nama Tentor *</label><input class="form-control" id="namaTentor" required></div>
+                    <div class="form-group"><label>Tarif/Sesi (Rp) *</label><input type="number" class="form-control" id="tarifTentor" required></div>
+                    <div class="form-group"><label>Rekening</label><input class="form-control" id="rekeningTentor"></div>
+                    <div class="form-group"><label>Alamat</label><textarea class="form-textarea" id="alamatTentor" rows="2"></textarea></div>
+                    <div class="form-group"><label>Catatan</label><textarea class="form-textarea" id="catatanTentor" rows="2"></textarea></div>
+                    <div class="form-group"><label>Murid (pisah koma)</label><input class="form-control" id="muridTentor"></div>
+                    <button type="submit" class="btn-primary" style="width:100%;">Simpan</button>
+                </form>
+            `;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        async function saveTambahTentor() {
+            const payload = {
+                namaTentor: document.getElementById('namaTentor').value,
+                tarif: document.getElementById('tarifTentor').value,
+                rekening: document.getElementById('rekeningTentor').value,
+                alamat: document.getElementById('alamatTentor').value,
+                catatan: document.getElementById('catatanTentor').value,
+                murid: document.getElementById('muridTentor').value
+            };
+            showNotification('✅ Data berhasil disimpan (simulasi)', 'success');
+            hideModal();
+            refreshAllData();
+        }
+
+        function showTambahMuridForm() {
+            const tentorOptions = dataTentor.map(t => `<option value="${t.nama}">${t.nama}</option>`).join('');
+            document.getElementById('modalContent').innerHTML = `
+                <div class="modal-header"><h3>Tambah Murid</h3><button class="modal-close" onclick="hideModal()">×</button></div>
+                <form onsubmit="event.preventDefault(); saveTambahMurid()">
+                    <div class="form-group"><label>Nama Murid *</label><input class="form-control" id="namaMurid" required></div>
+                    <div class="form-group"><label>Kelas *</label><input class="form-control" id="kelasMurid" required></div>
+                    <div class="form-group"><label>Alamat</label><textarea class="form-textarea" id="alamatMurid" rows="2"></textarea></div>
+                    <div class="form-group"><label>Biaya (Rp) *</label><input type="number" class="form-control" id="biayaMurid" required></div>
+                    <div class="form-group"><label>Management Fee (%) *</label><input type="number" class="form-control" id="managementFeeMurid" value="10" required></div>
+                    <div class="form-group"><label>Nomor Orang Tua</label><input class="form-control" id="nomorOrtuMurid"></div>
+                    <div class="form-group"><label>Tentor</label><select class="form-select" id="tentorMurid"><option value="">-- Pilih --</option>${tentorOptions}</select></div>
+                    <button type="submit" class="btn-primary" style="width:100%;">Simpan</button>
+                </form>
+            `;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        async function saveTambahMurid() {
+            const payload = {
+                namaMurid: document.getElementById('namaMurid').value,
+                kelas: document.getElementById('kelasMurid').value,
+                alamat: document.getElementById('alamatMurid').value,
+                biaya: document.getElementById('biayaMurid').value,
+                managementFee: document.getElementById('managementFeeMurid').value,
+                nomorOrtu: document.getElementById('nomorOrtuMurid').value,
+                tentor: document.getElementById('tentorMurid').value
+            };
+            showNotification('✅ Data berhasil disimpan (simulasi)', 'success');
+            hideModal();
+            refreshAllData();
+        }
+
+        function showTambahAbsensiForm() {
+            const tentorOptions = dataTentor.map(t => `<option value="${t.nama}">${t.nama}</option>`).join('');
+            const muridOptions = dataMurid.map(m => `<option value="${m.nama}">${m.nama}</option>`).join('');
+            const today = new Date().toISOString().split('T')[0];
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="modal-header"><h3>Tambah Absensi</h3><button class="modal-close" onclick="hideModal()">×</button></div>
+                <form onsubmit="event.preventDefault(); saveTambahAbsensi()">
+                    <div class="form-group"><label>Nama Tentor *</label><select class="form-select" id="namaTentorAbsensi" required><option value="">-- Pilih --</option>${tentorOptions}</select></div>
+                    <div class="form-group"><label>Tipe Les *</label><select class="form-select" id="tipeLesAbsensi" required><option value="Private">Private</option><option value="Kelompok">Kelompok</option></select></div>
+                    <div class="form-group"><label>Nama Murid *</label><select class="form-select" id="namaMuridAbsensi" required><option value="">-- Pilih --</option>${muridOptions}</select></div>
+                    <div class="form-group"><label>Tanggal *</label><input type="date" class="form-control" id="tanggalAbsensi" value="${today}" required></div>
+                    <div class="form-group"><label>Kendala</label><textarea class="form-textarea" id="kendalaAbsensi" rows="2"></textarea></div>
+                    <button type="submit" class="btn-primary" style="width:100%;">Simpan</button>
+                </form>
+            `;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        async function saveTambahAbsensi() {
+            const payload = {
+                namaTentor: document.getElementById('namaTentorAbsensi').value,
+                tipeLes: document.getElementById('tipeLesAbsensi').value,
+                namaMurid: document.getElementById('namaMuridAbsensi').value,
+                tanggal: document.getElementById('tanggalAbsensi').value,
+                kendala: document.getElementById('kendalaAbsensi').value
+            };
+            showNotification('✅ Data berhasil disimpan (simulasi)', 'success');
+            hideModal();
+            refreshAllData();
+        }
+
+        function hideModal() {
+            document.getElementById('formModal').style.display = 'none';
+        }
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', async () => {
+            await refreshAllData();
+            showMenu('dashboard');
+        });
+    </script>
+</body>
+</html>
