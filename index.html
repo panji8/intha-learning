@@ -393,7 +393,7 @@
         .status-belum { background: #FEF3C7; color: var(--warning); }
 
         /* ===== BUTTON ===== */
-        .btn-primary, .btn-outline, .btn-refresh {
+        .btn-primary, .btn-outline, .btn-refresh, .btn-icon {
             padding: 0.7rem 1.2rem;
             border-radius: 40px;
             font-weight: 600;
@@ -421,6 +421,17 @@
             gap: 5px;
         }
 
+        .btn-icon {
+            background: transparent;
+            color: var(--text-secondary);
+            padding: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .btn-icon:hover {
+            background: var(--bg-soft);
+        }
+
         .btn-outline-small {
             padding: 0.3rem 0.8rem;
             font-size: 0.8rem;
@@ -431,6 +442,57 @@
                 width: 100%;
                 justify-content: center;
             }
+        }
+
+        /* ===== ACTION MENU ===== */
+        .action-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .action-menu .btn-icon {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+        }
+
+        .action-menu .btn-icon:hover {
+            background: var(--bg-soft);
+        }
+
+        .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            z-index: 100;
+            border: 1px solid var(--border-soft);
+        }
+
+        .action-dropdown.show {
+            display: block;
+        }
+
+        .action-dropdown a {
+            color: var(--text-primary);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .action-dropdown a:hover {
+            background: var(--bg-soft);
+            border-radius: 12px;
         }
 
         /* ===== MODAL ===== */
@@ -458,12 +520,175 @@
             overflow-y: auto;
         }
 
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-soft);
+        }
+
         .modal-close {
             background: none;
             border: none;
             font-size: 2rem;
             cursor: pointer;
             color: var(--text-secondary);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-soft);
+        }
+
+        /* ===== LIST MURID ===== */
+        .student-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .student-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-soft);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .student-item:hover {
+            background: var(--bg-soft);
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: var(--primary-100);
+            color: var(--primary-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+        }
+
+        .student-detail {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .student-badge {
+            background: var(--bg-soft);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== TENTOR CARD ===== */
+        .tentor-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tentor-card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 1.2rem;
+            box-shadow: 0 2px 8px var(--shadow-soft);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .tentor-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px var(--shadow-soft);
+            border-color: var(--primary-100);
+        }
+
+        .tentor-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tentor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: var(--primary-100);
+            color: var(--primary-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .tentor-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .tentor-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .tentor-info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .tentor-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 2px solid var(--border-soft);
+        }
+
+        .student-count {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
         }
 
         /* ===== FORM ===== */
@@ -681,6 +906,21 @@
                 if (isNaN(d.getTime())) return tanggal;
                 return d.toLocaleDateString('id-ID', { 
                     day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric' 
+                });
+            } catch {
+                return tanggal;
+            }
+        }
+
+        function formatTanggalShort(tanggal) {
+            if (!tanggal || tanggal === '-') return '-';
+            try {
+                const d = new Date(tanggal);
+                if (isNaN(d.getTime())) return tanggal;
+                return d.toLocaleDateString('id-ID', { 
+                    day: 'numeric', 
                     month: 'short', 
                     year: 'numeric' 
                 });
@@ -693,7 +933,7 @@
             if (!bulanStr || bulanStr === '-') return '-';
             try {
                 const [year, month] = bulanStr.split('-');
-                const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
                 return `${monthNames[parseInt(month)-1]} ${year}`;
             } catch {
                 return bulanStr;
@@ -855,12 +1095,18 @@
                         jumlahSesi: 0,
                         biayaPerSesi: murid.biaya,
                         managementFee: murid.managementFee,
-                        status: 'Belum Dibayar'
+                        status: 'Belum Dibayar',
+                        pertemuan: []
                     });
                 }
                 
                 const tagihan = tagihanMap.get(key);
                 tagihan.jumlahSesi++;
+                tagihan.pertemuan.push({
+                    tanggal: absensi.tanggal,
+                    tipeLes: absensi.tipeLes,
+                    kendala: absensi.kendala
+                });
             });
             
             const tagihanArray = [];
@@ -1001,6 +1247,11 @@
             }
         }
 
+        // ===== FUNGSI UNTUK MENDAPATKAN MURID PER TENTOR =====
+        function getMuridByTentor(namaTentor) {
+            return dataMurid.filter(m => m.tentor === namaTentor);
+        }
+
         // ===== RENDER FUNCTIONS =====
         function renderDashboard() {
             const summary = getTagihanSummary();
@@ -1025,7 +1276,14 @@
                         <table class="table">
                             <thead><tr><th>Bulan</th><th>Murid</th><th>Tentor</th><th>Sesi</th><th>Total</th><th>Status</th></tr></thead>
                             <tbody>${dataTagihan.slice(0, 5).map(t => `
-                                <tr><td>${formatBulan(t.bulan)}</td><td>${t.namaMurid}</td><td>${t.namaTentor}</td><td>${t.jumlahSesi} sesi</td><td>${formatRupiah(t.totalSetelahFee)}</td><td><span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span></td></tr>
+                                <tr>
+                                    <td>${formatBulan(t.bulan)}</td>
+                                    <td>${t.namaMurid}</td>
+                                    <td>${t.namaTentor}</td>
+                                    <td>${t.jumlahSesi} sesi</td>
+                                    <td>${formatRupiah(t.totalSetelahFee)}</td>
+                                    <td><span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span></td>
+                                </tr>
                             `).join('')}</tbody>
                         </table>
                     </div>
@@ -1034,6 +1292,19 @@
         }
 
         function renderTentor() {
+            // Group tentor by nama (menghindari duplikasi)
+            const tentorMap = new Map();
+            dataTentor.forEach(t => {
+                if (!tentorMap.has(t.nama)) {
+                    tentorMap.set(t.nama, {
+                        ...t,
+                        count: 1
+                    });
+                }
+            });
+            
+            const uniqueTentor = Array.from(tentorMap.values());
+            
             return `
                 <div class="card-white">
                     <div class="card-header">
@@ -1043,13 +1314,44 @@
                             <button class="btn-refresh" onclick="refreshAllData()"><i class="bi bi-arrow-repeat"></i> Sync</button>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead><tr><th>Nama Tentor</th><th>Tarif/Sesi</th><th>Rekening</th><th>Alamat</th><th>Catatan</th><th>Murid</th></tr></thead>
-                            <tbody>${dataTentor.map(t => `
-                                <tr><td><strong>${t.nama}</strong></td><td>${formatRupiah(t.tarif)}</td><td>${t.rekening}</td><td>${t.alamat}</td><td>${t.catatan}</td><td>${t.murid}</td></tr>
-                            `).join('')}</tbody>
-                        </table>
+                    
+                    <div class="tentor-list">
+                        ${uniqueTentor.map(t => {
+                            const muridList = getMuridByTentor(t.nama);
+                            return `
+                                <div class="tentor-card" onclick="showDetailTentor('${t.nama}')">
+                                    <div class="tentor-card-header">
+                                        <div class="tentor-avatar">
+                                            ${t.nama.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <div class="tentor-name">${t.nama}</div>
+                                            <div class="tentor-info-item">
+                                                <i class="bi bi-cash"></i> ${formatRupiah(t.tarif)}/sesi
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tentor-info">
+                                        <div class="tentor-info-item">
+                                            <i class="bi bi-bank"></i> ${t.rekening}
+                                        </div>
+                                        <div class="tentor-info-item">
+                                            <i class="bi bi-geo-alt"></i> ${t.alamat.substring(0, 30)}${t.alamat.length > 30 ? '...' : ''}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="tentor-stats">
+                                        <span class="student-count">
+                                            <i class="bi bi-person-video2"></i> ${muridList.length} Murid
+                                        </span>
+                                        <span class="badge badge-teal">
+                                            <i class="bi bi-calendar-check"></i> Aktif
+                                        </span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
                     </div>
                 </div>
             `;
@@ -1115,7 +1417,13 @@
                             <thead><tr><th>Tanggal</th><th>Tentor</th><th>Tipe Les</th><th>Murid</th><th>Kendala</th></tr></thead>
                             <tbody id="absensi-table-body">
                                 ${filteredAbsensi.map(a => `
-                                    <tr><td>${formatTanggal(a.tanggal)}</td><td>${a.namaTentor}</td><td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td><td>${a.namaMurid}</td><td>${a.kendala}</td></tr>
+                                    <tr>
+                                        <td>${formatTanggalShort(a.tanggal)}</td>
+                                        <td>${a.namaTentor}</td>
+                                        <td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td>
+                                        <td>${a.namaMurid}</td>
+                                        <td>${a.kendala}</td>
+                                    </tr>
                                 `).join('')}
                             </tbody>
                         </table>
@@ -1160,7 +1468,18 @@
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
-                                <tr><th>Bulan</th><th>Murid</th><th>Tentor</th><th>Sesi</th><th>Biaya/Sesi</th><th>Total</th><th>Fee</th><th>After Fee</th><th>Status</th></tr>
+                                <tr>
+                                    <th>Bulan</th>
+                                    <th>Murid</th>
+                                    <th>Tentor</th>
+                                    <th>Sesi</th>
+                                    <th>Biaya/Sesi</th>
+                                    <th>Total</th>
+                                    <th>Fee</th>
+                                    <th>After Fee</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 ${filtered.map(t => `
@@ -1174,6 +1493,21 @@
                                         <td>${formatRupiah(t.feeAmount)}</td>
                                         <td><strong>${formatRupiah(t.totalSetelahFee)}</strong></td>
                                         <td><span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span></td>
+                                        <td>
+                                            <div class="action-menu">
+                                                <button class="btn-icon" onclick="toggleActionMenu('${t.id}')">
+                                                    <i class="bi bi-three-dots-vertical"></i>
+                                                </button>
+                                                <div class="action-dropdown" id="menu-${t.id}">
+                                                    <a onclick="showDetailTagihan('${t.id}')">
+                                                        <i class="bi bi-list-ul"></i> Detail Pertemuan
+                                                    </a>
+                                                    <a onclick="showKirimTagihan('${t.id}')">
+                                                        <i class="bi bi-send"></i> Kirim Tagihan
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 `).join('')}
                             </tbody>
@@ -1181,6 +1515,360 @@
                     </div>
                 </div>
             `;
+        }
+
+        // ===== FUNGSI ACTION MENU =====
+        function toggleActionMenu(id) {
+            const menu = document.getElementById(`menu-${id}`);
+            const allMenus = document.querySelectorAll('.action-dropdown');
+            allMenus.forEach(m => {
+                if (m !== menu) m.classList.remove('show');
+            });
+            menu.classList.toggle('show');
+        }
+
+        // Menutup dropdown jika klik di luar
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.action-menu')) {
+                document.querySelectorAll('.action-dropdown').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+        });
+
+        // ===== FITUR DETAIL TENTOR =====
+        function showDetailTentor(namaTentor) {
+            const tentor = dataTentor.find(t => t.nama === namaTentor);
+            if (!tentor) return;
+
+            const muridList = getMuridByTentor(namaTentor);
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>Detail Tentor</h3>
+                    <button class="modal-close" onclick="hideModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-soft); border-radius: 16px;">
+                        <div class="tentor-avatar" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                            ${tentor.nama.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 0.3rem;">${tentor.nama}</h4>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <span class="badge badge-teal"><i class="bi bi-cash"></i> ${formatRupiah(tentor.tarif)}/sesi</span>
+                                <span class="badge badge-purple"><i class="bi bi-bank"></i> ${tentor.rekening}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem;">Daftar Murid (${muridList.length})</h4>
+                    
+                    ${muridList.length > 0 ? `
+                        <div class="student-list">
+                            ${muridList.map(m => `
+                                <div class="student-item" onclick="showDetailMurid('${m.nama}')">
+                                    <div class="student-avatar">
+                                        ${m.nama.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div class="student-info">
+                                        <div class="student-name">${m.nama}</div>
+                                        <div class="student-detail">
+                                            Kelas ${m.kelas} • ${formatRupiah(m.biaya)}/sesi
+                                        </div>
+                                    </div>
+                                    <span class="student-badge">
+                                        <i class="bi bi-telephone"></i> ${m.nomorOrtu}
+                                    </span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : '<p style="text-align: center; color: var(--text-secondary);">Belum ada murid yang ditugaskan</p>'}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-outline" onclick="hideModal()">Tutup</button>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalContent;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        // ===== FITUR DETAIL MURID =====
+        function showDetailMurid(namaMurid) {
+            const murid = dataMurid.find(m => m.nama === namaMurid);
+            if (!murid) return;
+
+            // Hitung total sesi dan tagihan untuk murid ini
+            const tagihanMurid = dataTagihan.filter(t => t.namaMurid === namaMurid);
+            const totalSesi = tagihanMurid.reduce((sum, t) => sum + t.jumlahSesi, 0);
+            const totalTagihan = tagihanMurid.reduce((sum, t) => sum + t.totalSetelahFee, 0);
+            const tagihanBelum = tagihanMurid.filter(t => t.status === 'Belum Dibayar').reduce((sum, t) => sum + t.totalSetelahFee, 0);
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>Detail Murid</h3>
+                    <button class="modal-close" onclick="hideModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-soft); border-radius: 16px;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="student-avatar" style="width: 50px; height: 50px; font-size: 1.2rem;">
+                                ${murid.nama.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 0.3rem;">${murid.nama}</h4>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                    <span class="badge badge-teal">Kelas ${murid.kelas}</span>
+                                    <span class="badge badge-purple">${murid.tentor || 'Belum ada tentor'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem;">
+                            <div>
+                                <small style="color: var(--text-secondary);">Biaya per Sesi</small>
+                                <div><strong>${formatRupiah(murid.biaya)}</strong></div>
+                            </div>
+                            <div>
+                                <small style="color: var(--text-secondary);">Management Fee</small>
+                                <div><strong>${murid.managementFee}%</strong></div>
+                            </div>
+                            <div>
+                                <small style="color: var(--text-secondary);">No. Orang Tua</small>
+                                <div><strong>${murid.nomorOrtu}</strong></div>
+                            </div>
+                            <div>
+                                <small style="color: var(--text-secondary);">Alamat</small>
+                                <div><strong>${murid.alamat}</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-bottom: 1.5rem;">
+                        <div style="text-align: center; padding: 0.8rem; background: var(--bg-soft); border-radius: 12px;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary-700);">${totalSesi}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Total Sesi</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.8rem; background: var(--bg-soft); border-radius: 12px;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary-700);">${formatRupiah(totalTagihan)}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Total Tagihan</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.8rem; background: var(--bg-soft); border-radius: 12px;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #F59E0B;">${formatRupiah(tagihanBelum)}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">Belum Dibayar</div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-bottom: 1rem;">Riwayat Tagihan</h4>
+                    ${tagihanMurid.length > 0 ? `
+                        <div style="max-height: 300px; overflow-y: auto;">
+                            ${tagihanMurid.map(t => `
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid var(--border-soft);">
+                                    <div>
+                                        <div><strong>${formatBulan(t.bulan)}</strong></div>
+                                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${t.jumlahSesi} sesi</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div><strong>${formatRupiah(t.totalSetelahFee)}</strong></div>
+                                        <span class="status-badge ${t.status === 'Lunas' ? 'status-lunas' : 'status-belum'}">${t.status}</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : '<p style="text-align: center; color: var(--text-secondary);">Belum ada riwayat tagihan</p>'}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-outline" onclick="hideModal()">Tutup</button>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalContent;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        // ===== FITUR DETAIL TAGIHAN =====
+        function showDetailTagihan(id) {
+            const tagihan = dataTagihan.find(t => t.id === id);
+            if (!tagihan) return;
+
+            const pertemuanList = tagihan.pertemuan || [];
+            const sortedPertemuan = [...pertemuanList].sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>Detail Pertemuan</h3>
+                    <button class="modal-close" onclick="hideModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div style="margin-bottom: 1.5rem; padding: 1rem; background: var(--bg-soft); border-radius: 16px;">
+                        <p><strong>Murid:</strong> ${tagihan.namaMurid}</p>
+                        <p><strong>Bulan:</strong> ${formatBulan(tagihan.bulan)}</p>
+                        <p><strong>Total Tagihan:</strong> ${formatRupiah(tagihan.totalSetelahFee)}</p>
+                        <p><strong>Jumlah Pertemuan:</strong> ${tagihan.jumlahSesi} sesi</p>
+                    </div>
+                    
+                    <h4 style="margin-bottom: 1rem;">Daftar Pertemuan:</h4>
+                    ${sortedPertemuan.length > 0 ? `
+                        <ul class="meeting-list">
+                            ${sortedPertemuan.map((p, index) => `
+                                <li class="meeting-item">
+                                    <div>
+                                        <div class="meeting-date">Pertemuan ${index + 1}: ${formatTanggal(p.tanggal)}</div>
+                                        <div class="meeting-info">
+                                            <span class="badge ${p.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${p.tipeLes}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    ` : '<p style="text-align: center; color: var(--text-secondary);">Tidak ada data pertemuan</p>'}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-outline" onclick="hideModal()">Tutup</button>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalContent;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        // ===== FITUR KIRIM TAGIHAN =====
+        function showKirimTagihan(id) {
+            const tagihan = dataTagihan.find(t => t.id === id);
+            if (!tagihan) return;
+
+            const murid = dataMurid.find(m => m.nama === tagihan.namaMurid);
+            const pertemuanList = tagihan.pertemuan || [];
+            const sortedPertemuan = [...pertemuanList].sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+
+            // Template pertemuan tanpa kendala
+            const templatePertemuan = sortedPertemuan.map((p, index) => {
+                const tgl = formatTanggal(p.tanggal);
+                return `${index + 1}. ${tgl}`;
+            }).join('\n');
+
+            // Template pesan tanpa info tentor dan management fee
+            const pesanTemplate = `*INVOICE PEMBAYARAN LES*
+            
+Yth. Orang Tua/Wali ${tagihan.namaMurid}
+
+Berikut adalah rincian tagihan les untuk bulan ${formatBulan(tagihan.bulan)}:
+
+*Detail Pertemuan:*
+${templatePertemuan}
+
+*Ringkasan Tagihan:*
+Jumlah Pertemuan: ${tagihan.jumlahSesi} sesi
+Biaya per Sesi: ${formatRupiah(tagihan.biayaPerSesi)}
+Total Tagihan: ${formatRupiah(tagihan.totalSebelumFee)}
+
+*Total yang Harus Dibayar: ${formatRupiah(tagihan.totalSetelahFee)}*
+
+Mohon melakukan pembayaran sebelum tanggal 10 bulan berikutnya.
+Pembayaran dapat ditransfer ke rekening:
+
+Bank BCA: 1234567890 a.n. Intha Learning
+
+Terima kasih.
+
+*Intha Learning*`;
+
+            const modalContent = `
+                <div class="modal-header">
+                    <h3>Kirim Tagihan</h3>
+                    <button class="modal-close" onclick="hideModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="invoice-template">
+                        <div class="invoice-header">
+                            <h3>INVOICE PEMBAYARAN</h3>
+                            <p>Intha Learning</p>
+                        </div>
+                        
+                        <div class="invoice-detail">
+                            <span>Kepada:</span>
+                            <span><strong>${tagihan.namaMurid}</strong></span>
+                        </div>
+                        <div class="invoice-detail">
+                            <span>Bulan:</span>
+                            <span><strong>${formatBulan(tagihan.bulan)}</strong></span>
+                        </div>
+                        
+                        <div style="margin: 1rem 0;">
+                            <h4>Detail Pertemuan:</h4>
+                            <ul class="meeting-list-simple">
+                                ${sortedPertemuan.map((p, index) => `
+                                    <li>Pertemuan ${index + 1}: ${formatTanggal(p.tanggal)} (${p.tipeLes})</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div class="invoice-detail">
+                            <span>Jumlah Pertemuan:</span>
+                            <span>${tagihan.jumlahSesi} sesi</span>
+                        </div>
+                        <div class="invoice-detail">
+                            <span>Biaya per Sesi:</span>
+                            <span>${formatRupiah(tagihan.biayaPerSesi)}</span>
+                        </div>
+                        <div class="invoice-total">
+                            <span>TOTAL DIBAYAR:</span>
+                            <span>${formatRupiah(tagihan.totalSetelahFee)}</span>
+                        </div>
+                        
+                        <div style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+                            <p>Transfer ke rekening:<br>
+                            <strong>Bank BCA: 1234567890 a.n. Intha Learning</strong></p>
+                            <p>Pembayaran paling lambat tanggal 10 bulan berikutnya.</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 1rem;">
+                        <label class="form-label">Preview Pesan WhatsApp:</label>
+                        <textarea class="form-textarea" rows="8" readonly style="background: var(--bg-soft);">${pesanTemplate}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-outline" onclick="copyToClipboard('${pesanTemplate.replace(/'/g, "\\'").replace(/\n/g, '\\n')}')">
+                        <i class="bi bi-files"></i> Salin Pesan
+                    </button>
+                    <button class="btn-primary" onclick="kirimViaWA('${tagihan.namaMurid}', '${pesanTemplate.replace(/'/g, "\\'").replace(/\n/g, '\\n')}')">
+                        <i class="bi bi-whatsapp"></i> Kirim WhatsApp
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalContent;
+            document.getElementById('formModal').style.display = 'flex';
+        }
+
+        // ===== FUNGSI KIRIM VIA WA =====
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Pesan berhasil disalin!', 'success');
+            }).catch(() => {
+                showNotification('Gagal menyalin pesan', 'error');
+            });
+        }
+
+        function kirimViaWA(namaMurid, pesan) {
+            const murid = dataMurid.find(m => m.nama === namaMurid);
+            let nomorWA = '';
+            
+            if (murid && murid.nomorOrtu) {
+                nomorWA = murid.nomorOrtu.replace(/[^0-9]/g, '');
+                if (nomorWA.startsWith('0')) {
+                    nomorWA = '62' + nomorWA.substring(1);
+                }
+            }
+            
+            if (nomorWA) {
+                const waUrl = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+                window.open(waUrl, '_blank');
+            } else {
+                showNotification('Nomor WhatsApp tidak ditemukan', 'error');
+            }
         }
 
         // ===== SETUP FILTERS =====
@@ -1216,7 +1904,13 @@
             }
             
             tbody.innerHTML = filteredAbsensi.map(a => `
-                <tr><td>${formatTanggal(a.tanggal)}</td><td>${a.namaTentor}</td><td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td><td>${a.namaMurid}</td><td>${a.kendala}</td></tr>
+                <tr>
+                    <td>${formatTanggalShort(a.tanggal)}</td>
+                    <td>${a.namaTentor}</td>
+                    <td><span class="badge ${a.tipeLes === 'Private' ? 'badge-teal' : 'badge-purple'}">${a.tipeLes}</span></td>
+                    <td>${a.namaMurid}</td>
+                    <td>${a.kendala}</td>
+                </tr>
             `).join('');
         }
 
