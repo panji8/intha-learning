@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#4F46E5">
   <title>Intha Learning</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -20,9 +21,15 @@
       --success: #10B981;
       --shadow: 0 1px 3px rgba(0,0,0,0.1);
       --radius: 12px;
+      --sidebar-w: 250px;
     }
     
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    
+    html, body {
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+    }
     
     body {
       font-family: 'Inter', sans-serif;
@@ -32,9 +39,11 @@
       min-height: 100vh;
     }
     
-    /* SIDEBAR */
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
     .sidebar {
-      width: 250px;
+      width: var(--sidebar-w);
       background: var(--bg-sidebar);
       color: #E4E4E7;
       position: fixed;
@@ -43,6 +52,7 @@
       display: flex;
       flex-direction: column;
       z-index: 100;
+      transition: transform 0.3s ease;
     }
     
     .brand {
@@ -66,6 +76,7 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
+      overflow-y: auto;
     }
     
     .nav-item {
@@ -87,14 +98,17 @@
     
     .nav-item:hover { background: rgba(255,255,255,0.08); }
     .nav-item.active { background: var(--accent); color: white; }
-    .nav-item .icon { font-size: 18px; width: 20px; text-align: center; }
+    .nav-item .icon { font-size: 18px; width: 20px; text-align: center; flex-shrink: 0; }
     
-    /* MAIN */
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
     .main {
       flex: 1;
-      margin-left: 250px;
+      margin-left: var(--sidebar-w);
       padding: 30px;
       max-width: 100%;
+      min-width: 0;
     }
     
     .page-title {
@@ -110,9 +124,12 @@
       margin-bottom: 25px; 
     }
     
+    /* ============================================================
+       STATS
+    ============================================================ */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
       margin-bottom: 30px;
     }
@@ -137,12 +154,16 @@
       margin-top: 5px; 
     }
     
+    /* ============================================================
+       CARD
+    ============================================================ */
     .card {
       background: var(--bg-card);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 22px;
       margin-bottom: 20px;
+      overflow: hidden;
     }
     
     .card-header {
@@ -150,6 +171,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
     
     .card-title {
@@ -158,7 +181,22 @@
       font-weight: 600;
     }
     
-    table { width: 100%; border-collapse: collapse; }
+    /* ============================================================
+       TABLE (RESPONSIVE)
+    ============================================================ */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -22px;
+      padding: 0 22px;
+    }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+    
     th {
       background: #F5F5F5;
       padding: 11px;
@@ -168,14 +206,21 @@
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      white-space: nowrap;
     }
+    
     td { 
       padding: 11px; 
       border-bottom: 1px solid var(--border); 
       font-size: 14px; 
+      white-space: nowrap;
     }
+    
     tr:hover { background: #F9F9F9; }
     
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
     .btn {
       padding: 10px 18px;
       border: none;
@@ -185,9 +230,11 @@
       font-weight: 500;
       font-family: 'Inter', sans-serif;
       transition: all 0.2s;
+      white-space: nowrap;
     }
     .btn-primary { background: var(--accent); color: white; }
     .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:active { transform: scale(0.97); }
     .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 6px; }
     .btn-edit { background: var(--warning); color: white; margin-right: 5px; }
     .btn-edit:hover { background: #D97706; }
@@ -196,6 +243,36 @@
     .btn-secondary { background: #E4E4E7; color: var(--text); }
     .btn-secondary:hover { background: #D4D4D8; }
     
+    /* ============================================================
+       FILTER SELECT
+    ============================================================ */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .filter-select {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      background: white;
+      cursor: pointer;
+      font-weight: 500;
+      min-width: 110px;
+    }
+    
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    /* ============================================================
+       MODAL
+    ============================================================ */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -204,18 +281,20 @@
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      padding: 15px;
     }
     .modal-overlay.active { display: flex; }
     
     .modal {
       background: white;
       border-radius: var(--radius);
-      width: 90%;
+      width: 100%;
       max-width: 450px;
       max-height: 90vh;
       overflow-y: auto;
       padding: 25px;
       animation: slideUp 0.2s;
+      -webkit-overflow-scrolling: touch;
     }
     
     @keyframes slideUp {
@@ -237,13 +316,17 @@
       font-weight: 600; 
       color: var(--text-secondary); 
     }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, 
+    .form-group select, 
+    .form-group textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 16px; /* 16px prevent zoom on iOS */
       font-family: 'Inter', sans-serif;
+      background: white;
+      color: var(--text);
     }
     .form-group input:focus, 
     .form-group select:focus, 
@@ -256,16 +339,23 @@
       display: flex; 
       gap: 10px; 
       justify-content: flex-end; 
-      margin-top: 20px; 
+      margin-top: 20px;
+      flex-wrap: wrap;
     }
     
+    /* ============================================================
+       EMPTY STATE
+    ============================================================ */
     .empty { 
       text-align: center; 
-      padding: 40px; 
+      padding: 40px 20px; 
       color: #999; 
     }
     .empty .icon { font-size: 48px; margin-bottom: 10px; }
     
+    /* ============================================================
+       TOAST
+    ============================================================ */
     .toast {
       position: fixed;
       bottom: 20px;
@@ -276,13 +366,16 @@
       font-size: 14px;
       z-index: 2000;
       animation: slideIn 0.3s;
-      max-width: 350px;
+      max-width: calc(100vw - 40px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
     .toast.warning { background: var(--warning); }
     
+    /* ============================================================
+       LOADING
+    ============================================================ */
     .loading-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -309,13 +402,130 @@
       to { transform: translateX(0); opacity: 1; }
     }
     
+    /* ============================================================
+       MOBILE MENU BUTTON
+    ============================================================ */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 200;
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(79,70,229,0.4);
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 99;
+    }
+    .sidebar-overlay.active { display: block; }
+    
+    /* ============================================================
+       RESPONSIVE - TABLET
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .main { padding: 25px; }
+      .page-title { font-size: 24px; }
+    }
+    
+    /* ============================================================
+       RESPONSIVE - MOBILE
+    ============================================================ */
     @media (max-width: 768px) {
-      .sidebar { width: 60px; padding: 10px; }
-      .brand { font-size: 0; }
-      .brand::before { content: '📚'; font-size: 24px; }
-      .nav-item span:not(.icon) { display: none; }
-      .main { margin-left: 60px; padding: 15px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      :root { --sidebar-w: 260px; }
+      
+      /* Sidebar jadi off-canvas */
+      .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+      }
+      .sidebar.open { transform: translateX(0); }
+      
+      /* Menu button muncul */
+      .mobile-menu-btn { display: flex; }
+      
+      /* Main jadi full width */
+      .main {
+        margin-left: 0;
+        padding: 70px 15px 20px;
+      }
+      
+      .page-title { font-size: 22px; }
+      .page-subtitle { font-size: 13px; margin-bottom: 18px; }
+      
+      /* Stats grid 2 kolom */
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      
+      .stat-card { padding: 16px; }
+      .stat-card .value { font-size: 24px; }
+      .stat-card .label { font-size: 12px; }
+      
+      /* Card lebih compact */
+      .card { padding: 16px; margin-bottom: 15px; }
+      .card-header { flex-direction: column; align-items: stretch; }
+      .card-title { font-size: 15px; }
+      
+      /* Table scroll */
+      .table-wrap {
+        margin: 0 -16px;
+        padding: 0 16px;
+      }
+      
+      table { min-width: 480px; }
+      th { font-size: 11px; padding: 10px 8px; }
+      td { font-size: 13px; padding: 10px 8px; }
+      
+      /* Button full width di mobile */
+      .card-header .btn { width: 100%; }
+      
+      /* Filter full width */
+      .filter-bar { width: 100%; }
+      .filter-select { flex: 1; min-width: 0; }
+      
+      /* Modal */
+      .modal { padding: 20px; max-width: 100%; }
+      .modal h2 { font-size: 18px; }
+      
+      /* Toast */
+      .toast {
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
+        max-width: none;
+        font-size: 13px;
+      }
+    }
+    
+    /* ============================================================
+       RESPONSIVE - SMALL MOBILE
+    ============================================================ */
+    @media (max-width: 380px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-card .value { font-size: 22px; }
+    }
+    
+    /* ============================================================
+       LANDSCAPE MOBILE
+    ============================================================ */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .main { padding-top: 60px; }
     }
   </style>
 </head>
@@ -325,8 +535,14 @@
     <div class="spinner"></div>
   </div>
   
+  <!-- MOBILE MENU BUTTON -->
+  <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+  
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       📚 Intha Learning
       <small>Sistem Manajemen Bimbel</small>
@@ -378,7 +594,9 @@
           <h2 class="card-title">Daftar Tentor</h2>
           <button class="btn btn-primary" onclick="openAddModal('tentor')">+ Tambah Tentor</button>
         </div>
-        <div id="tentorTable"></div>
+        <div class="table-wrap">
+          <div id="tentorTable"></div>
+        </div>
       </div>
     </div>
     
@@ -391,7 +609,9 @@
           <h2 class="card-title">Daftar Murid</h2>
           <button class="btn btn-primary" onclick="openAddModal('murid')">+ Tambah Murid</button>
         </div>
-        <div id="muridTable"></div>
+        <div class="table-wrap">
+          <div id="muridTable"></div>
+        </div>
       </div>
     </div>
     
@@ -404,22 +624,59 @@
           <h2 class="card-title">Daftar Absensi</h2>
           <button class="btn btn-primary" onclick="openAddModal('absensi')">+ Tambah Absensi</button>
         </div>
-        <div id="absensiTable"></div>
+        <div class="table-wrap">
+          <div id="absensiTable"></div>
+        </div>
       </div>
     </div>
     
     <!-- PEMBAYARAN -->
     <div id="view-pembayaran" style="display:none;">
-      <h1 class="page-title">Pembayaran Bulan Ini</h1>
-      <p class="page-subtitle">Rekap pembayaran les private bulan berjalan</p>
-      <div class="card"><div id="paymentTable"></div></div>
+      <h1 class="page-title">Pembayaran</h1>
+      <p class="page-subtitle">Rekap pembayaran les private per periode</p>
+      
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title" id="paymentTitle">Periode</h2>
+          <div class="filter-bar">
+            <select id="filterMonth" class="filter-select" onchange="loadPaymentData()">
+              <option value="0">Januari</option>
+              <option value="1">Februari</option>
+              <option value="2">Maret</option>
+              <option value="3">April</option>
+              <option value="4">Mei</option>
+              <option value="5">Juni</option>
+              <option value="6">Juli</option>
+              <option value="7">Agustus</option>
+              <option value="8">September</option>
+              <option value="9">Oktober</option>
+              <option value="10">November</option>
+              <option value="11">Desember</option>
+            </select>
+            <select id="filterYear" class="filter-select" onchange="loadPaymentData()"></select>
+            <button class="btn btn-primary btn-sm" onclick="loadPaymentData()">🔄 Refresh</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="stats-grid" id="paymentStats"></div>
+      
+      <div class="card">
+        <div class="table-wrap">
+          <div id="paymentTable"></div>
+        </div>
+      </div>
     </div>
     
     <!-- LOG -->
     <div id="view-log" style="display:none;">
       <h1 class="page-title">Log Perubahan</h1>
       <p class="page-subtitle">Riwayat semua perubahan data</p>
-      <div class="card"><div id="logTable"></div></div>
+      <div class="card">
+        <div class="table-wrap">
+          <div id="logTable"></div>
+        </div>
+      </div>
     </div>
   </main>
   
@@ -446,20 +703,60 @@
     // ============================================================
     let allData = {
       tentor: [], murid: [], absensi: [], log: [],
-      stats: {}, payment: []
+      stats: {}, payment: [], paymentMeta: {}
     };
     let editingRow = null;
     let editingType = null;
+    
+    const MONTH_NAMES = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
     
     // ============================================================
     // INIT
     // ============================================================
     document.addEventListener('DOMContentLoaded', () => {
+      populateYearDropdown();
+      
+      const now = new Date();
+      document.getElementById('filterMonth').value = now.getMonth();
+      document.getElementById('filterYear').value = now.getFullYear();
+      
       loadData();
     });
     
+    function populateYearDropdown() {
+      const sel = document.getElementById('filterYear');
+      const currentYear = new Date().getFullYear();
+      const startYear = currentYear - 5;
+      const endYear = currentYear + 2;
+      
+      sel.innerHTML = '';
+      for (let y = endYear; y >= startYear; y--) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        sel.appendChild(opt);
+      }
+      sel.value = currentYear;
+    }
+    
     // ============================================================
-    // API CALLER (JSONP - bypass CORS)
+    // SIDEBAR TOGGLE (MOBILE)
+    // ============================================================
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('active');
+    }
+    
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+    
+    // ============================================================
+    // API CALLER (JSONP)
     // ============================================================
     function apiCall(action, params = {}) {
       return new Promise((resolve, reject) => {
@@ -506,7 +803,7 @@
     }
     
     // ============================================================
-    // LOAD DATA
+    // LOAD ALL DATA
     // ============================================================
     async function loadData() {
       showLoading();
@@ -531,7 +828,44 @@
     }
     
     // ============================================================
-    // TAB NAVIGATION
+    // LOAD PAYMENT DATA (dengan filter)
+    // ============================================================
+    async function loadPaymentData() {
+      const month = parseInt(document.getElementById('filterMonth').value);
+      const year = parseInt(document.getElementById('filterYear').value);
+      
+      showLoading();
+      try {
+        const data = await apiCall('getPaymentData', { month, year });
+        
+        if (data.error) {
+          showToast('Error: ' + data.error, 'error');
+          hideLoading();
+          return;
+        }
+        
+        // Update state
+        allData.payment = data.rows || [];
+        allData.paymentMeta = {
+          month: data.month,
+          year: data.year,
+          label: data.label,
+          grandTotal: data.grandTotal || 0,
+          totalSesi: data.totalSesi || 0
+        };
+        
+        renderPayment();
+        showToast('Filter: ' + data.label, 'success');
+        
+      } catch (error) {
+        showToast('Gagal memuat: ' + error.message, 'error');
+        console.error(error);
+      }
+      hideLoading();
+    }
+    
+    // ============================================================
+    // SWITCH TAB
     // ============================================================
     function switchTab(tabName, btn) {
       document.querySelectorAll('[id^="view-"]').forEach(el => {
@@ -543,6 +877,11 @@
         el.classList.remove('active');
       });
       btn.classList.add('active');
+      
+      // Auto-close sidebar on mobile
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
       
       renderAll();
     }
@@ -563,7 +902,7 @@
     // RENDER DASHBOARD
     // ============================================================
     function renderDashboard() {
-      const s = allData.stats;
+      const s = allData.stats || {};
       document.getElementById('statsGrid').innerHTML = `
         <div class="stat-card">
           <div class="value">${s.totalTentor || 0}</div>
@@ -633,8 +972,8 @@
             <td>${escapeHtml(t.alamat) || '-'}</td>
             <td>${escapeHtml(t.murid) || '-'}</td>
             <td>
-              <button class="btn btn-sm btn-edit" onclick="editData('tentor', ${i})">✏️ Edit</button>
-              <button class="btn btn-sm btn-delete" onclick="deleteData('tentor', ${i})">🗑️ Hapus</button>
+              <button class="btn btn-sm btn-edit" onclick="editData('tentor', ${i})">✏️</button>
+              <button class="btn btn-sm btn-delete" onclick="deleteData('tentor', ${i})">🗑️</button>
             </td>
           </tr>
         `;
@@ -668,8 +1007,8 @@
             <td>Rp ${formatNumber(m.afterFee)}</td>
             <td>${escapeHtml(m.tentor) || '-'}</td>
             <td>
-              <button class="btn btn-sm btn-edit" onclick="editData('murid', ${i})">✏️ Edit</button>
-              <button class="btn btn-sm btn-delete" onclick="deleteData('murid', ${i})">🗑️ Hapus</button>
+              <button class="btn btn-sm btn-edit" onclick="editData('murid', ${i})">✏️</button>
+              <button class="btn btn-sm btn-delete" onclick="deleteData('murid', ${i})">🗑️</button>
             </td>
           </tr>
         `;
@@ -702,8 +1041,8 @@
             <td>${a.tanggalLes}</td>
             <td>${escapeHtml(a.kendala) || '-'}</td>
             <td>
-              <button class="btn btn-sm btn-edit" onclick="editData('absensi', ${i})">✏️ Edit</button>
-              <button class="btn btn-sm btn-delete" onclick="deleteData('absensi', ${i})">🗑️ Hapus</button>
+              <button class="btn btn-sm btn-edit" onclick="editData('absensi', ${i})">✏️</button>
+              <button class="btn btn-sm btn-delete" onclick="deleteData('absensi', ${i})">🗑️</button>
             </td>
           </tr>
         `;
@@ -717,25 +1056,56 @@
     // RENDER PAYMENT
     // ============================================================
     function renderPayment() {
+      const rows = allData.payment || [];
+      const meta = allData.paymentMeta || {};
+      
+      // Update title
+      const titleEl = document.getElementById('paymentTitle');
+      if (titleEl) {
+        titleEl.textContent = 'Periode: ' + (meta.label || 'Bulan Ini');
+      }
+      
+      // Update stats
+      const statsDiv = document.getElementById('paymentStats');
+      if (statsDiv) {
+        statsDiv.innerHTML = `
+          <div class="stat-card">
+            <div class="value">${rows.length}</div>
+            <div class="label">Jumlah Murid</div>
+          </div>
+          <div class="stat-card">
+            <div class="value">${meta.totalSesi || 0}</div>
+            <div class="label">Total Sesi</div>
+          </div>
+          <div class="stat-card">
+            <div class="value" style="font-size:22px;">Rp ${formatNumber(meta.grandTotal || 0)}</div>
+            <div class="label">Total Pembayaran</div>
+          </div>
+        `;
+      }
+      
       const div = document.getElementById('paymentTable');
       
-      if (allData.payment.length === 0) {
-        div.innerHTML = '<div class="empty"><div class="icon">💰</div><p>Belum ada pembayaran bulan ini</p></div>';
+      if (rows.length === 0) {
+        div.innerHTML = `
+          <div class="empty">
+            <div class="icon">💰</div>
+            <p>Belum ada data pembayaran di periode ini</p>
+          </div>
+        `;
         return;
       }
       
       let html = '<table><thead><tr><th>Tentor</th><th>Murid</th><th>Sesi</th><th>Biaya/Sesi</th><th>Total</th></tr></thead><tbody>';
-      let total = 0;
       
-      allData.payment.forEach(p => {
-        total += p.total;
+      rows.forEach(p => {
         html += `
           <tr>
             <td>${escapeHtml(p.tentor)}</td>
             <td>${escapeHtml(p.murid)}</td>
             <td>${p.sesi}x</td>
             <td>Rp ${formatNumber(p.biayaPerSesi || 0)}</td>
-            <td>Rp ${formatNumber(p.total)}</td>
+            <td style="font-weight:600;color:var(--accent);">Rp ${formatNumber(p.total)}</td>
           </tr>
         `;
       });
@@ -743,7 +1113,7 @@
       html += `
         <tr style="font-weight:bold;background:#F5F5F5;">
           <td colspan="4">TOTAL</td>
-          <td>Rp ${formatNumber(total)}</td>
+          <td style="color:var(--accent);">Rp ${formatNumber(meta.grandTotal || 0)}</td>
         </tr>
       </tbody></table>`;
       
@@ -881,11 +1251,11 @@
         </div>
         <div class="form-group">
           <label>Biaya *</label>
-          <input id="f4" type="number" value="${d.biaya || 0}" min="0">
+          <input id="f4" type="number" value="${d.biaya || 0}" min="0" inputmode="numeric">
         </div>
         <div class="form-group">
           <label>Management Fee (%) *</label>
-          <input id="f5" type="number" step="0.1" min="0" max="100" value="${d.managementFee || 10}" placeholder="Contoh: 10 artinya 10%">
+          <input id="f5" type="number" step="0.1" min="0" max="100" value="${d.managementFee || 10}" placeholder="Contoh: 10 artinya 10%" inputmode="decimal">
         </div>
         <div class="form-group">
           <label>Tentor</label>
@@ -976,20 +1346,15 @@
         }
       }
       
-      // Kirim ke API
       showLoading();
       
       try {
         let action;
         if (currentRow && currentRow >= 2) {
-          // Update
           action = 'update' + capitalize(currentType);
           data.rowNumber = currentRow;
-          console.log('UPDATE', action, currentRow);
         } else {
-          // Tambah
           action = 'tambah' + capitalize(currentType);
-          console.log('TAMBAH', action);
         }
         
         const result = await apiCall(action, data);
