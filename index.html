@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#0F172A">
   <title>Dashboard - Intha Learning</title>
+  
   <!-- FAVICON -->
-<link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <style>
     /* ============================================================
        DESIGN TOKENS
@@ -49,7 +52,6 @@
       --sidebar-text-active: #FFFFFF;
       --sidebar-hover: rgba(255,255,255,0.06);
       
-      --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
       --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
       --shadow-lg: 0 12px 24px rgba(0,0,0,0.1);
@@ -86,17 +88,12 @@
       -webkit-font-smoothing: antialiased;
     }
     
-    /* ICON BASE */
+    /* ICON */
     .ico {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      fill: none;
-      flex-shrink: 0;
-      display: block;
+      width: 18px; height: 18px;
+      stroke: currentColor; stroke-width: 2;
+      stroke-linecap: round; stroke-linejoin: round;
+      fill: none; flex-shrink: 0; display: block;
     }
     .ico-sm { width: 14px; height: 14px; }
     .ico-lg { width: 22px; height: 22px; }
@@ -385,9 +382,6 @@
       font-size: 14px;
     }
     
-    /* ============================================================
-       FILTER PERIOD
-    ============================================================ */
     .period-filter {
       display: flex;
       gap: 8px;
@@ -414,7 +408,7 @@
     }
     
     /* ============================================================
-       STATS CARDS
+       STATS
     ============================================================ */
     .stats-grid {
       display: grid;
@@ -453,13 +447,9 @@
       transition: opacity 0.2s;
     }
     
-    .stat-card:hover::before {
-      opacity: 1;
-    }
+    .stat-card:hover::before { opacity: 1; }
     
-    .stat-card.financial {
-      padding: 24px;
-    }
+    .stat-card.financial { padding: 24px; }
     
     .stat-top {
       display: flex;
@@ -469,8 +459,7 @@
     }
     
     .stat-icon {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 10px;
       background: var(--primary-light);
       color: var(--primary);
@@ -479,25 +468,10 @@
       justify-content: center;
     }
     
-    .stat-icon.green {
-      background: var(--success-light);
-      color: var(--success);
-    }
-    
-    .stat-icon.orange {
-      background: var(--warning-light);
-      color: #B45309;
-    }
-    
-    .stat-icon.blue {
-      background: var(--info-light);
-      color: var(--info);
-    }
-    
-    .stat-icon.red {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
+    .stat-icon.green { background: var(--success-light); color: var(--success); }
+    .stat-icon.orange { background: var(--warning-light); color: #B45309; }
+    .stat-icon.blue { background: var(--info-light); color: var(--info); }
+    .stat-icon.red { background: var(--danger-light); color: var(--danger); }
     
     .stat-label {
       font-size: 12px;
@@ -517,13 +491,8 @@
       line-height: 1.1;
     }
     
-    .stat-value.green {
-      color: var(--success);
-    }
-    
-    .stat-value.orange {
-      color: #B45309;
-    }
+    .stat-value.green { color: var(--success); }
+    .stat-value.orange { color: #B45309; }
     
     .stat-note {
       font-size: 12px;
@@ -544,15 +513,8 @@
       border-radius: 6px;
     }
     
-    .stat-trend.up {
-      background: var(--success-light);
-      color: var(--success);
-    }
-    
-    .stat-trend.down {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
+    .stat-trend.up { background: var(--success-light); color: var(--success); }
+    .stat-trend.down { background: var(--danger-light); color: var(--danger); }
     
     /* ============================================================
        CHART GRID
@@ -605,12 +567,10 @@
       height: 280px;
     }
     
-    .chart-wrapper.doughnut {
-      height: 260px;
-    }
+    .chart-wrapper.doughnut { height: 260px; }
     
     /* ============================================================
-       TOP TENTOR LIST
+       TOP LIST
     ============================================================ */
     .top-list {
       display: flex;
@@ -627,13 +587,10 @@
       transition: background 0.15s;
     }
     
-    .top-item:hover {
-      background: var(--bg-hover);
-    }
+    .top-item:hover { background: var(--bg-hover); }
     
     .top-rank {
-      width: 28px;
-      height: 28px;
+      width: 28px; height: 28px;
       border-radius: 8px;
       background: var(--bg-hover);
       color: var(--text-secondary);
@@ -645,24 +602,12 @@
       flex-shrink: 0;
     }
     
-    .top-rank.gold {
-      background: linear-gradient(135deg, #FBBF24, #F59E0B);
-      color: white;
-    }
-    
-    .top-rank.silver {
-      background: linear-gradient(135deg, #CBD5E1, #94A3B8);
-      color: white;
-    }
-    
-    .top-rank.bronze {
-      background: linear-gradient(135deg, #FB923C, #EA580C);
-      color: white;
-    }
+    .top-rank.gold { background: linear-gradient(135deg, #FBBF24, #F59E0B); color: white; }
+    .top-rank.silver { background: linear-gradient(135deg, #CBD5E1, #94A3B8); color: white; }
+    .top-rank.bronze { background: linear-gradient(135deg, #FB923C, #EA580C); color: white; }
     
     .top-avatar {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       background: var(--primary-light);
       color: var(--primary);
@@ -674,10 +619,7 @@
       flex-shrink: 0;
     }
     
-    .top-info {
-      flex: 1;
-      min-width: 0;
-    }
+    .top-info { flex: 1; min-width: 0; }
     
     .top-name {
       font-size: 13px;
@@ -711,7 +653,7 @@
     }
     
     /* ============================================================
-       ACTIVITY FEED
+       ACTIVITY
     ============================================================ */
     .activity-list {
       display: flex;
@@ -728,13 +670,10 @@
       align-items: flex-start;
     }
     
-    .activity-item:hover {
-      background: var(--bg-hover);
-    }
+    .activity-item:hover { background: var(--bg-hover); }
     
     .activity-dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       flex-shrink: 0;
       margin-top: 6px;
@@ -745,10 +684,7 @@
     .activity-dot.orange { background: var(--warning); }
     .activity-dot.red { background: var(--danger); }
     
-    .activity-content {
-      flex: 1;
-      min-width: 0;
-    }
+    .activity-content { flex: 1; min-width: 0; }
     
     .activity-title {
       font-size: 13px;
@@ -819,6 +755,11 @@
     .badge.warning { background: var(--warning-light); color: #B45309; }
     .badge.info { background: var(--info-light); color: var(--info); }
     
+    /* Clickable row */
+    tr.clickable-row { cursor: pointer; }
+    tr.clickable-row:hover { background: var(--primary-light) !important; }
+    tr.clickable-row:hover td { color: var(--primary); }
+    
     /* ============================================================
        BUTTONS
     ============================================================ */
@@ -859,8 +800,7 @@
     }
     
     .btn-icon {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 8px;
       border: none;
       cursor: pointer;
@@ -870,23 +810,24 @@
       transition: all 0.15s;
     }
     
-    .btn-icon.edit {
-      background: var(--warning-light);
-      color: #B45309;
-    }
+    .btn-icon.edit { background: var(--warning-light); color: #B45309; }
     .btn-icon.edit:hover { background: #FDE68A; }
-    
-    .btn-icon.delete {
-      background: var(--danger-light);
-      color: var(--danger);
-    }
+    .btn-icon.delete { background: var(--danger-light); color: var(--danger); }
     .btn-icon.delete:hover { background: #FECACA; }
     
-    .btn-secondary {
-      background: var(--bg-hover);
-      color: var(--text);
-    }
+    .btn-secondary { background: var(--bg-hover); color: var(--text); }
     .btn-secondary:hover { background: var(--border); }
+    
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.3);
+    }
+    
+    .btn-whatsapp:hover {
+      background: linear-gradient(135deg, #1EBE5A, #0F7568);
+      box-shadow: 0 6px 16px rgba(37,211,102,0.4);
+    }
     
     .btn-group { display: flex; gap: 6px; }
     
@@ -900,8 +841,7 @@
     }
     
     .period-icon {
-      width: 42px;
-      height: 42px;
+      width: 42px; height: 42px;
       border-radius: 12px;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -978,8 +918,7 @@
     }
     
     .modal-close {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border-radius: 8px;
       border: none;
       background: var(--bg-hover);
@@ -1046,7 +985,7 @@
     textarea.form-control { resize: vertical; min-height: 80px; }
     
     /* ============================================================
-       EMPTY STATE
+       EMPTY
     ============================================================ */
     .empty {
       text-align: center;
@@ -1055,8 +994,7 @@
     }
     
     .empty-icon {
-      width: 64px;
-      height: 64px;
+      width: 64px; height: 64px;
       border-radius: 20px;
       background: var(--primary-light);
       color: var(--primary);
@@ -1126,8 +1064,7 @@
     .loading-overlay.active { display: flex; }
     
     .spinner {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       border: 3px solid var(--border);
       border-top-color: var(--primary);
       border-radius: 50%;
@@ -1148,12 +1085,178 @@
     .sidebar-overlay.active { display: block; }
     
     /* ============================================================
+       INVOICE
+    ============================================================ */
+    .invoice-modal { max-width: 560px; }
+    
+    .invoice-paper {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    
+    .invoice-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 22px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .invoice-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .invoice-brand-logo {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .invoice-brand-text strong {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      display: block;
+      letter-spacing: -0.02em;
+    }
+    
+    .invoice-brand-text small {
+      font-size: 11px;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    
+    .invoice-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.2);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    
+    .invoice-body { padding: 22px 24px; }
+    
+    .invoice-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    
+    .invoice-info-item label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 3px;
+    }
+    
+    .invoice-info-item div {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    
+    .invoice-table thead th {
+      background: var(--bg-hover);
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border: none;
+      white-space: nowrap;
+    }
+    
+    .invoice-table thead th:last-child,
+    .invoice-table tbody td:last-child { text-align: right; }
+    
+    .invoice-table tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    
+    .invoice-table tbody tr:last-child td { border-bottom: none; }
+    
+    .invoice-total {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: var(--primary-light);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .invoice-total-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .invoice-total-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+    
+    .invoice-footer-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 14px 24px;
+      border-top: 1px dashed var(--border);
+      background: #FAFAF9;
+    }
+    
+    .invoice-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+    
+    .invoice-actions .btn {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    /* ============================================================
        RESPONSIVE
     ============================================================ */
     @media (max-width: 1200px) {
-      .chart-grid {
-        grid-template-columns: 1fr;
-      }
+      .chart-grid { grid-template-columns: 1fr; }
     }
     
     @media (max-width: 1024px) {
@@ -1188,14 +1291,8 @@
       .page-title { font-size: 22px; }
       .page-subtitle { font-size: 13px; }
       
-      .period-filter {
-        width: 100%;
-      }
-      
-      .period-filter .filter-select {
-        flex: 1;
-        min-width: 0;
-      }
+      .period-filter { width: 100%; }
+      .period-filter .filter-select { flex: 1; min-width: 0; }
       
       .stats-grid,
       .stats-grid.financial {
@@ -1248,6 +1345,14 @@
         font-size: 13px;
         padding: 13px 16px;
       }
+      
+      .invoice-modal { max-width: 100%; }
+      .invoice-info-grid { grid-template-columns: 1fr; gap: 10px; }
+      .invoice-body { padding: 18px; }
+      .invoice-header { padding: 18px; }
+      .invoice-total-value { font-size: 18px; }
+      .invoice-actions { flex-direction: column; }
+      .invoice-actions .btn { width: 100%; }
     }
     
     @media (max-width: 400px) {
@@ -1258,9 +1363,7 @@
   </style>
 </head>
 <body>
-  <!-- ============================================================
-       SVG ICON SPRITE
-  ============================================================ -->
+  <!-- SVG ICON SPRITE -->
   <svg width="0" height="0" style="position:absolute;">
     <defs>
       <symbol id="i-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
@@ -1281,14 +1384,15 @@
       <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
       <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
       <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-      <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
-      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
       <symbol id="i-coins" viewBox="0 0 24 24"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></symbol>
       <symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></symbol>
       <symbol id="i-trending-up" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></symbol>
       <symbol id="i-trending-down" viewBox="0 0 24 24"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></symbol>
       <symbol id="i-banknote" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
-      <symbol id="i-percent" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+      <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></symbol>
     </defs>
   </svg>
   
@@ -1377,11 +1481,9 @@
     </div>
   </aside>
   
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
-    <!-- ============================================================
-         DASHBOARD
-    ============================================================ -->
+    <!-- DASHBOARD -->
     <div id="view-dashboard">
       <div class="page-header">
         <div>
@@ -1411,13 +1513,9 @@
         </div>
       </div>
       
-      <!-- Financial KPIs -->
       <div class="stats-grid financial" id="financialStats"></div>
-      
-      <!-- Operational KPIs -->
       <div class="stats-grid" id="operationalStats"></div>
       
-      <!-- Charts Row 1 -->
       <div class="chart-grid">
         <div class="card">
           <div class="card-header">
@@ -1444,7 +1542,6 @@
         </div>
       </div>
       
-      <!-- Charts Row 2 -->
       <div class="chart-grid equal">
         <div class="card">
           <div class="card-header">
@@ -1460,7 +1557,7 @@
           <div class="card-header">
             <div>
               <h2 class="card-title">Sesi Harian</h2>
-              <p class="card-subtitle">Aktivitas 30 hari terakhir</p>
+              <p class="card-subtitle">Aktivitas bulan ini</p>
             </div>
           </div>
           <div class="chart-wrapper">
@@ -1469,7 +1566,6 @@
         </div>
       </div>
       
-      <!-- Activity -->
       <div class="card">
         <div class="card-header">
           <div>
@@ -1601,7 +1697,7 @@
         <div class="card-header">
           <div>
             <h2 class="card-title">Rincian Pembayaran</h2>
-            <p class="card-subtitle">Total per tentor & murid</p>
+            <p class="card-subtitle">Total per tentor & murid — klik baris untuk invoice</p>
           </div>
         </div>
         <div class="table-wrap"><div id="paymentTable"></div></div>
@@ -1623,7 +1719,7 @@
     </div>
   </main>
   
-  <!-- MODAL -->
+  <!-- MODAL CRUD -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <div class="modal-header">
@@ -1646,6 +1742,22 @@
     </div>
   </div>
   
+  <!-- MODAL INVOICE -->
+  <div class="modal-overlay" id="invoiceOverlay">
+    <div class="modal invoice-modal">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Detail Invoice</h2>
+          <p class="modal-subtitle">Kirim ke wali murid via WhatsApp</p>
+        </div>
+        <button class="modal-close" onclick="closeInvoice()" aria-label="Tutup">
+          <svg class="ico"><use href="#i-x"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="invoiceBody"></div>
+    </div>
+  </div>
+  
   <script>
     // ============================================================
     // ⚠️ GANTI DENGAN URL WEB APP ANDA
@@ -1661,8 +1773,8 @@
     };
     let editingRow = null;
     let editingType = null;
+    let currentInvoice = null;
     
-    // Charts
     let revenueChartInstance = null;
     let typeLesChartInstance = null;
     let dailyChartInstance = null;
@@ -1672,9 +1784,6 @@
       'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
     
-    // ============================================================
-    // ICON HELPER
-    // ============================================================
     function icon(name, size = '') {
       const cls = size ? `ico ${size}` : 'ico';
       return `<svg class="${cls}"><use href="#i-${name}"/></svg>`;
@@ -1714,9 +1823,6 @@
       });
     }
     
-    // ============================================================
-    // SIDEBAR
-    // ============================================================
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('sidebarOverlay');
@@ -1737,16 +1843,12 @@
     }
     
     // ============================================================
-    // API CALLER
+    // API
     // ============================================================
     function apiCall(action, params = {}) {
       return new Promise((resolve, reject) => {
         const callbackName = 'gasCb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
-        
-        const timeout = setTimeout(() => {
-          cleanup();
-          reject(new Error('Request timeout'));
-        }, 30000);
+        const timeout = setTimeout(() => { cleanup(); reject(new Error('Request timeout')); }, 30000);
         
         function cleanup() {
           clearTimeout(timeout);
@@ -1754,10 +1856,7 @@
           if (script && script.parentNode) script.parentNode.removeChild(script);
         }
         
-        window[callbackName] = function(data) {
-          cleanup();
-          resolve(data);
-        };
+        window[callbackName] = function(data) { cleanup(); resolve(data); };
         
         const script = document.createElement('script');
         const encodedParams = encodeURIComponent(JSON.stringify(params));
@@ -1767,24 +1866,14 @@
       });
     }
     
-    // ============================================================
-    // LOADING
-    // ============================================================
     function showLoading() { document.getElementById('loadingOverlay').classList.add('active'); }
     function hideLoading() { document.getElementById('loadingOverlay').classList.remove('active'); }
     
-    // ============================================================
-    // LOAD DATA
-    // ============================================================
     async function loadData() {
       showLoading();
       try {
         const data = await apiCall('getAllData');
-        if (data.error) {
-          showToast('Error: ' + data.error, 'error');
-          hideLoading();
-          return;
-        }
+        if (data.error) { showToast('Error: ' + data.error, 'error'); hideLoading(); return; }
         allData = data;
         renderAll();
       } catch (error) {
@@ -1800,11 +1889,8 @@
       showLoading();
       try {
         const data = await apiCall('getPaymentData', { month, year });
-        if (data.error) {
-          showToast('Error: ' + data.error, 'error');
-          hideLoading();
-          return;
-        }
+        if (data.error) { showToast('Error: ' + data.error, 'error'); hideLoading(); return; }
+        
         allData.payment = data.rows || [];
         allData.paymentMeta = {
           month: data.month, year: data.year, label: data.label,
@@ -1818,13 +1904,9 @@
       hideLoading();
     }
     
-    // ============================================================
-    // SWITCH TAB
-    // ============================================================
     function switchTab(tabName, btn) {
       document.querySelectorAll('[id^="view-"]').forEach(el => el.style.display = 'none');
       document.getElementById('view-' + tabName).style.display = 'block';
-      
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       
@@ -1837,13 +1919,9 @@
       document.title = (pageNames[tabName] || 'Intha Learning') + ' - Intha Learning';
       
       if (window.innerWidth <= 768) closeSidebar();
-      
       renderAll();
     }
     
-    // ============================================================
-    // RENDER ALL
-    // ============================================================
     function renderAll() {
       renderDashboard();
       renderTentor();
@@ -1854,28 +1932,20 @@
     }
     
     // ============================================================
-    // DASHBOARD - HITUNG SEMUA METRIK
+    // DASHBOARD
     // ============================================================
     function getDashboardMetrics(month, year) {
       const muridMap = {};
       allData.murid.forEach(m => { muridMap[m.namaMurid] = m; });
       
-      // Filter absensi bulan ini
       const monthlyAbsensi = allData.absensi.filter(a => {
         if (!a.tanggalLes) return false;
         const d = new Date(a.tanggalLes);
         return d.getMonth() === month && d.getFullYear() === year;
       });
       
-      // Hitung financial
-      let pendapatanKotor = 0;
-      let biayaTentor = 0;
-      let feeBimbel = 0;
-      let sesiTotal = 0;
-      let sesiAman = 0;
-      
-      const perTentor = {};
-      const perTipe = {};
+      let pendapatanKotor = 0, biayaTentor = 0, feeBimbel = 0, sesiTotal = 0, sesiAman = 0;
+      const perTentor = {}, perTipe = {};
       
       monthlyAbsensi.forEach(a => {
         const murid = muridMap[a.namaMurid];
@@ -1884,7 +1954,7 @@
         const biaya = Number(murid.biaya) || 0;
         const feePct = Number(murid.managementFee) || 0;
         const afterFee = Number(murid.afterFee) || (biaya - (biaya * feePct / 100));
-        const feeAmount = biaya - afterFee; // fee untuk bimbel
+        const feeAmount = biaya - afterFee;
         
         pendapatanKotor += biaya;
         biayaTentor += afterFee;
@@ -1892,64 +1962,45 @@
         sesiTotal++;
         if (!a.kendala) sesiAman++;
         
-        // Per tentor
-        if (!perTentor[a.namaTentor]) {
-          perTentor[a.namaTentor] = { sesi: 0, revenue: 0, fee: 0 };
-        }
+        if (!perTentor[a.namaTentor]) perTentor[a.namaTentor] = { sesi: 0, revenue: 0, fee: 0 };
         perTentor[a.namaTentor].sesi++;
         perTentor[a.namaTentor].revenue += biaya;
         perTentor[a.namaTentor].fee += feeAmount;
         
-        // Per tipe les
         const tipe = a.tipeLes || 'Lainnya';
         perTipe[tipe] = (perTipe[tipe] || 0) + 1;
       });
       
-      // Hitung bulan lalu untuk trend
       const prevMonth = month === 0 ? 11 : month - 1;
       const prevYear = month === 0 ? year - 1 : year;
-      
       const prevAbsensi = allData.absensi.filter(a => {
         if (!a.tanggalLes) return false;
         const d = new Date(a.tanggalLes);
         return d.getMonth() === prevMonth && d.getFullYear() === prevYear;
       });
       
-      let prevPendapatanKotor = 0;
-      let prevSesi = 0;
+      let prevKotor = 0, prevSesi = 0;
       prevAbsensi.forEach(a => {
         const murid = muridMap[a.namaMurid];
         if (!murid) return;
-        prevPendapatanKotor += Number(murid.biaya) || 0;
+        prevKotor += Number(murid.biaya) || 0;
         prevSesi++;
       });
       
-      // Trend
-      const trendKotor = prevPendapatanKotor > 0
-        ? ((pendapatanKotor - prevPendapatanKotor) / prevPendapatanKotor) * 100
-        : 0;
-      const trendSesi = prevSesi > 0
-        ? ((sesiTotal - prevSesi) / prevSesi) * 100
-        : 0;
-      
       return {
-        pendapatanKotor, biayaTentor, feeBimbel,
-        sesiTotal, sesiAman,
-        trendKotor, trendSesi,
-        prevPendapatanKotor, prevSesi,
-        perTentor, perTipe,
-        monthlyAbsensi
+        pendapatanKotor, biayaTentor, feeBimbel, sesiTotal, sesiAman,
+        trendKotor: prevKotor > 0 ? ((pendapatanKotor - prevKotor) / prevKotor) * 100 : 0,
+        trendSesi: prevSesi > 0 ? ((sesiTotal - prevSesi) / prevSesi) * 100 : 0,
+        perTentor, perTipe, monthlyAbsensi
       };
     }
     
     function renderDashboard() {
       const month = parseInt(document.getElementById('dashMonth').value);
       const year = parseInt(document.getElementById('dashYear').value);
-      
       const m = getDashboardMetrics(month, year);
       const periodLabel = MONTH_NAMES[month] + ' ' + year;
       
-      // ========== FINANCIAL KPIs ==========
       const trendKotorHtml = m.trendKotor !== 0 ? `
         <span class="stat-trend ${m.trendKotor > 0 ? 'up' : 'down'}">
           ${m.trendKotor > 0 ? icon('trending-up', 'ico-sm') : icon('trending-down', 'ico-sm')}
@@ -1987,7 +2038,6 @@
         </div>
       `;
       
-      // ========== OPERATIONAL KPIs ==========
       const trendSesiHtml = m.trendSesi !== 0 ? `
         <span class="stat-trend ${m.trendSesi > 0 ? 'up' : 'down'}">
           ${m.trendSesi > 0 ? icon('trending-up', 'ico-sm') : icon('trending-down', 'ico-sm')}
@@ -1997,18 +2047,14 @@
       
       document.getElementById('operationalStats').innerHTML = `
         <div class="stat-card">
-          <div class="stat-top">
-            <div class="stat-icon">${icon('graduation', 'ico-lg')}</div>
-          </div>
+          <div class="stat-top"><div class="stat-icon">${icon('graduation', 'ico-lg')}</div></div>
           <div class="stat-label">Total Murid</div>
           <div class="stat-value">${allData.murid.length}</div>
           <div class="stat-note">Terdaftar di sistem</div>
         </div>
         
         <div class="stat-card">
-          <div class="stat-top">
-            <div class="stat-icon">${icon('user-tie', 'ico-lg')}</div>
-          </div>
+          <div class="stat-top"><div class="stat-icon">${icon('user-tie', 'ico-lg')}</div></div>
           <div class="stat-label">Total Tentor</div>
           <div class="stat-value">${allData.tentor.length}</div>
           <div class="stat-note">Tentor aktif</div>
@@ -2025,16 +2071,13 @@
         </div>
         
         <div class="stat-card">
-          <div class="stat-top">
-            <div class="stat-icon green">${icon('check', 'ico-lg')}</div>
-          </div>
+          <div class="stat-top"><div class="stat-icon green">${icon('check', 'ico-lg')}</div></div>
           <div class="stat-label">Tanpa Kendala</div>
           <div class="stat-value green">${m.sesiAman}</div>
           <div class="stat-note">${m.sesiTotal > 0 ? ((m.sesiAman / m.sesiTotal) * 100).toFixed(0) : 0}% dari total sesi</div>
         </div>
       `;
       
-      // ========== CHARTS ==========
       renderRevenueChart(month, year);
       renderTypeLesChart(m.perTipe, periodLabel);
       renderTopTentor(m.perTentor);
@@ -2042,21 +2085,14 @@
       renderActivity();
     }
     
-    // ============================================================
-    // CHART: TREN PENDAPATAN 6 BULAN
-    // ============================================================
     function renderRevenueChart(month, year) {
       const muridMap = {};
       allData.murid.forEach(m => { muridMap[m.namaMurid] = m; });
       
-      const labels = [];
-      const dataKotor = [];
-      const dataBimbel = [];
+      const labels = [], dataKotor = [], dataBimbel = [];
       
-      // 6 bulan terakhir termasuk bulan ini
       for (let i = 5; i >= 0; i--) {
-        let m = month - i;
-        let y = year;
+        let m = month - i, y = year;
         while (m < 0) { m += 12; y -= 1; }
         
         labels.push(MONTH_NAMES[m].substring(0, 3) + ' ' + String(y).substring(2));
@@ -2072,7 +2108,6 @@
           
           const biaya = Number(murid.biaya) || 0;
           const afterFee = Number(murid.afterFee) || 0;
-          
           kotor += biaya;
           bimbel += (biaya - afterFee);
         });
@@ -2087,64 +2122,33 @@
       revenueChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: labels,
+          labels,
           datasets: [
-            {
-              label: 'Pendapatan Kotor',
-              data: dataKotor,
-              backgroundColor: 'rgba(99,102,241,0.85)',
-              borderRadius: 6,
-              maxBarThickness: 40,
-            },
-            {
-              label: 'Pendapatan Bimbel',
-              data: dataBimbel,
-              backgroundColor: 'rgba(16,185,129,0.85)',
-              borderRadius: 6,
-              maxBarThickness: 40,
-            }
+            { label: 'Pendapatan Kotor', data: dataKotor, backgroundColor: 'rgba(99,102,241,0.85)', borderRadius: 6, maxBarThickness: 40 },
+            { label: 'Pendapatan Bimbel', data: dataBimbel, backgroundColor: 'rgba(16,185,129,0.85)', borderRadius: 6, maxBarThickness: 40 }
           ]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: true, maintainAspectRatio: false,
           plugins: {
-            legend: {
-              position: 'bottom',
-              labels: { boxWidth: 12, padding: 15, font: { size: 12 } }
-            },
-            tooltip: {
-              callbacks: {
-                label: (ctx) => ' ' + ctx.dataset.label + ': Rp ' + formatNumber(ctx.raw)
-              }
-            }
+            legend: { position: 'bottom', labels: { boxWidth: 12, padding: 15, font: { size: 12 } } },
+            tooltip: { callbacks: { label: (ctx) => ' ' + ctx.dataset.label + ': Rp ' + formatNumber(ctx.raw) } }
           },
           scales: {
             y: {
               beginAtZero: true,
-              ticks: {
-                callback: (v) => v >= 1000000 ? 'Rp ' + (v / 1000000).toFixed(1) + 'jt'
-                  : v >= 1000 ? 'Rp ' + (v / 1000).toFixed(0) + 'rb' : v,
-                font: { size: 11 }
-              },
+              ticks: { callback: (v) => v >= 1000000 ? 'Rp ' + (v / 1000000).toFixed(1) + 'jt' : v >= 1000 ? 'Rp ' + (v / 1000).toFixed(0) + 'rb' : v, font: { size: 11 } },
               grid: { color: '#F1F5F9' }
             },
-            x: {
-              grid: { display: false },
-              ticks: { font: { size: 11 } }
-            }
+            x: { grid: { display: false }, ticks: { font: { size: 11 } } }
           }
         }
       });
     }
     
-    // ============================================================
-    // CHART: DISTRIBUSI TIPE LES (DOUGHNUT)
-    // ============================================================
     function renderTypeLesChart(perTipe, label) {
       const labels = Object.keys(perTipe);
       const data = Object.values(perTipe);
-      
       const subtitle = document.getElementById('typeLesSubtitle');
       if (subtitle) subtitle.textContent = label;
       
@@ -2164,23 +2168,11 @@
       
       typeLesChartInstance = new Chart(ctx, {
         type: 'doughnut',
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            backgroundColor: colors.slice(0, labels.length),
-            borderWidth: 0
-          }]
-        },
+        data: { labels, datasets: [{ data, backgroundColor: colors.slice(0, labels.length), borderWidth: 0 }] },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '65%',
+          responsive: true, maintainAspectRatio: false, cutout: '65%',
           plugins: {
-            legend: {
-              position: 'bottom',
-              labels: { boxWidth: 12, padding: 12, font: { size: 12 } }
-            },
+            legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 12 } } },
             tooltip: {
               callbacks: {
                 label: (ctx) => {
@@ -2195,9 +2187,6 @@
       });
     }
     
-    // ============================================================
-    // TOP TENTOR
-    // ============================================================
     function renderTopTentor(perTentor) {
       const list = Object.entries(perTentor)
         .map(([nama, d]) => ({ nama, ...d }))
@@ -2207,13 +2196,7 @@
       const div = document.getElementById('topTentorList');
       
       if (list.length === 0) {
-        div.innerHTML = `
-          <div class="empty" style="padding: 30px 20px;">
-            <div class="empty-icon" style="width:48px;height:48px;">${icon('inbox', 'ico-lg')}</div>
-            <h3 style="font-size:14px;">Belum Ada Data</h3>
-            <p>Belum ada sesi bulan ini</p>
-          </div>
-        `;
+        div.innerHTML = `<div class="empty" style="padding:30px 20px;"><div class="empty-icon" style="width:48px;height:48px;">${icon('inbox', 'ico-lg')}</div><h3 style="font-size:14px;">Belum Ada Data</h3><p>Belum ada sesi bulan ini</p></div>`;
         return;
       }
       
@@ -2233,14 +2216,10 @@
               <strong>Rp ${formatNumber(t.revenue)}</strong>
               <small>kotor</small>
             </div>
-          </div>
-        `;
+          </div>`;
       }).join('');
     }
     
-    // ============================================================
-    // CHART: SESI HARIAN 30 HARI
-    // ============================================================
     function renderDailyChart(month, year) {
       const daysInMonth = new Date(year, month + 1, 0).getDate();
       const dailyCount = new Array(daysInMonth).fill(0);
@@ -2254,60 +2233,35 @@
       });
       
       const labels = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-      
       const ctx = document.getElementById('dailyChart').getContext('2d');
       if (dailyChartInstance) dailyChartInstance.destroy();
       
       dailyChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: labels,
-          datasets: [{
-            label: 'Sesi',
-            data: dailyCount,
-            backgroundColor: 'rgba(99,102,241,0.75)',
-            borderRadius: 3,
-            maxBarThickness: 12
-          }]
+          labels,
+          datasets: [{ label: 'Sesi', data: dailyCount, backgroundColor: 'rgba(99,102,241,0.75)', borderRadius: 3, maxBarThickness: 12 }]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: true, maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: {
-              callbacks: {
-                title: (items) => 'Tanggal ' + items[0].label,
-                label: (ctx) => ' ' + ctx.raw + ' sesi'
-              }
-            }
+            tooltip: { callbacks: { title: (items) => 'Tanggal ' + items[0].label, label: (ctx) => ' ' + ctx.raw + ' sesi' } }
           },
           scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { stepSize: 1, font: { size: 10 } },
-              grid: { color: '#F1F5F9' }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 10 }
-            }
+            y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 10 } }, grid: { color: '#F1F5F9' } },
+            x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 0, autoSkip: true, autoSkipPadding: 10 } }
           }
         }
       });
     }
     
-    // ============================================================
-    // ACTIVITY FEED
-    // ============================================================
     function renderActivity() {
       const div = document.getElementById('activityList');
       const items = [];
       
-      // Log terbaru (5)
       allData.log.slice(0, 5).forEach(l => {
         items.push({
-          type: 'log',
           title: `<strong>${escapeHtml(l.jenisEdit)}</strong>`,
           detail: l.afterEdit ? `→ ${escapeHtml(l.afterEdit)}` : (l.beforeEdit ? `← ${escapeHtml(l.beforeEdit)}` : ''),
           time: l.tanggal,
@@ -2315,10 +2269,8 @@
         });
       });
       
-      // Absensi terbaru (5)
       allData.absensi.slice(-5).reverse().forEach(a => {
         items.push({
-          type: 'absensi',
           title: `Absensi: <strong>${escapeHtml(a.namaMurid)}</strong>`,
           detail: `${escapeHtml(a.namaTentor)} • ${a.tanggalLes}`,
           time: a.submittedAt || a.tanggalLes,
@@ -2327,17 +2279,10 @@
       });
       
       if (items.length === 0) {
-        div.innerHTML = `
-          <div class="empty" style="padding: 30px 20px;">
-            <div class="empty-icon" style="width:48px;height:48px;">${icon('history', 'ico-lg')}</div>
-            <h3 style="font-size:14px;">Belum Ada Aktivitas</h3>
-            <p>Aktivitas akan muncul di sini</p>
-          </div>
-        `;
+        div.innerHTML = `<div class="empty" style="padding:30px 20px;"><div class="empty-icon" style="width:48px;height:48px;">${icon('history', 'ico-lg')}</div><h3 style="font-size:14px;">Belum Ada Aktivitas</h3><p>Aktivitas akan muncul di sini</p></div>`;
         return;
       }
       
-      // Sort by time desc
       items.sort((a, b) => {
         const ta = new Date(a.time).getTime() || 0;
         const tb = new Date(b.time).getTime() || 0;
@@ -2366,15 +2311,12 @@
         if (diff < 3600) return Math.floor(diff / 60) + ' menit lalu';
         if (diff < 86400) return Math.floor(diff / 3600) + ' jam lalu';
         if (diff < 604800) return Math.floor(diff / 86400) + ' hari lalu';
-        
         return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      } catch (e) {
-        return timeStr;
-      }
+      } catch (e) { return timeStr; }
     }
     
     // ============================================================
-    // RENDER TENTOR
+    // RENDER TENTOR / MURID / ABSENSI / LOG
     // ============================================================
     function renderTentor() {
       const div = document.getElementById('tentorTable');
@@ -2388,28 +2330,22 @@
       
       let html = '<table><thead><tr><th>No</th><th>Nama Tentor</th><th>Rekening</th><th>Alamat</th><th>Murid</th><th>Aksi</th></tr></thead><tbody>';
       allData.tentor.forEach((t, i) => {
-        html += `
-          <tr>
-            <td>${i + 1}</td>
-            <td><strong>${escapeHtml(t.namaTentor)}</strong></td>
-            <td>${escapeHtml(t.rekening) || '-'}</td>
-            <td>${escapeHtml(t.alamat) || '-'}</td>
-            <td>${escapeHtml(t.murid) || '-'}</td>
-            <td>
-              <div class="btn-group">
-                <button class="btn-icon edit" onclick="editData('tentor', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
-                <button class="btn-icon delete" onclick="deleteData('tentor', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
-              </div>
-            </td>
-          </tr>`;
+        html += `<tr>
+          <td>${i + 1}</td>
+          <td><strong>${escapeHtml(t.namaTentor)}</strong></td>
+          <td>${escapeHtml(t.rekening) || '-'}</td>
+          <td>${escapeHtml(t.alamat) || '-'}</td>
+          <td>${escapeHtml(t.murid) || '-'}</td>
+          <td><div class="btn-group">
+            <button class="btn-icon edit" onclick="editData('tentor', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
+            <button class="btn-icon delete" onclick="deleteData('tentor', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
+          </div></td>
+        </tr>`;
       });
       html += '</tbody></table>';
       div.innerHTML = html;
     }
     
-    // ============================================================
-    // RENDER MURID
-    // ============================================================
     function renderMurid() {
       const div = document.getElementById('muridTable');
       const count = document.getElementById('muridCount');
@@ -2422,30 +2358,24 @@
       
       let html = '<table><thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Biaya</th><th>Fee</th><th>After Fee</th><th>Tentor</th><th>Aksi</th></tr></thead><tbody>';
       allData.murid.forEach((m, i) => {
-        html += `
-          <tr>
-            <td>${i + 1}</td>
-            <td><strong>${escapeHtml(m.namaMurid)}</strong></td>
-            <td>${escapeHtml(m.kelas) || '-'}</td>
-            <td>Rp ${formatNumber(m.biaya)}</td>
-            <td><span class="badge">${m.managementFee}%</span></td>
-            <td><strong style="color:var(--success);">Rp ${formatNumber(m.afterFee)}</strong></td>
-            <td>${escapeHtml(m.tentor) || '-'}</td>
-            <td>
-              <div class="btn-group">
-                <button class="btn-icon edit" onclick="editData('murid', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
-                <button class="btn-icon delete" onclick="deleteData('murid', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
-              </div>
-            </td>
-          </tr>`;
+        html += `<tr>
+          <td>${i + 1}</td>
+          <td><strong>${escapeHtml(m.namaMurid)}</strong></td>
+          <td>${escapeHtml(m.kelas) || '-'}</td>
+          <td>Rp ${formatNumber(m.biaya)}</td>
+          <td><span class="badge">${m.managementFee}%</span></td>
+          <td><strong style="color:var(--success);">Rp ${formatNumber(m.afterFee)}</strong></td>
+          <td>${escapeHtml(m.tentor) || '-'}</td>
+          <td><div class="btn-group">
+            <button class="btn-icon edit" onclick="editData('murid', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
+            <button class="btn-icon delete" onclick="deleteData('murid', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
+          </div></td>
+        </tr>`;
       });
       html += '</tbody></table>';
       div.innerHTML = html;
     }
     
-    // ============================================================
-    // RENDER ABSENSI
-    // ============================================================
     function renderAbsensi() {
       const div = document.getElementById('absensiTable');
       const count = document.getElementById('absensiCount');
@@ -2462,28 +2392,45 @@
           ? `<span class="badge warning">${icon('alert', 'ico-sm')} ${escapeHtml(a.kendala)}</span>`
           : `<span class="badge success">${icon('check', 'ico-sm')} Aman</span>`;
         
-        html += `
-          <tr>
-            <td>${i + 1}</td>
-            <td>${escapeHtml(a.namaTentor)}</td>
-            <td><strong>${escapeHtml(a.namaMurid)}</strong></td>
-            <td><span class="badge">${escapeHtml(a.tipeLes)}</span></td>
-            <td>${a.tanggalLes}</td>
-            <td>${kendalaBadge}</td>
-            <td>
-              <div class="btn-group">
-                <button class="btn-icon edit" onclick="editData('absensi', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
-                <button class="btn-icon delete" onclick="deleteData('absensi', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
-              </div>
-            </td>
-          </tr>`;
+        html += `<tr>
+          <td>${i + 1}</td>
+          <td>${escapeHtml(a.namaTentor)}</td>
+          <td><strong>${escapeHtml(a.namaMurid)}</strong></td>
+          <td><span class="badge">${escapeHtml(a.tipeLes)}</span></td>
+          <td>${a.tanggalLes}</td>
+          <td>${kendalaBadge}</td>
+          <td><div class="btn-group">
+            <button class="btn-icon edit" onclick="editData('absensi', ${i})" title="Edit">${icon('edit', 'ico-sm')}</button>
+            <button class="btn-icon delete" onclick="deleteData('absensi', ${i})" title="Hapus">${icon('trash', 'ico-sm')}</button>
+          </div></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      div.innerHTML = html;
+    }
+    
+    function renderLog() {
+      const div = document.getElementById('logTable');
+      if (allData.log.length === 0) {
+        div.innerHTML = `<div class="empty"><div class="empty-icon">${icon('history', 'ico-xl')}</div><h3>Belum Ada Log</h3><p>Log akan tercatat otomatis</p></div>`;
+        return;
+      }
+      
+      let html = '<table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Before</th><th>After</th></tr></thead><tbody>';
+      allData.log.slice(0, 50).forEach(l => {
+        html += `<tr>
+          <td>${l.tanggal}</td>
+          <td><span class="badge">${escapeHtml(l.jenisEdit)}</span></td>
+          <td>${escapeHtml(l.beforeEdit) || '-'}</td>
+          <td>${escapeHtml(l.afterEdit) || '-'}</td>
+        </tr>`;
       });
       html += '</tbody></table>';
       div.innerHTML = html;
     }
     
     // ============================================================
-    // RENDER PAYMENT
+    // PAYMENT
     // ============================================================
     function renderPayment() {
       const rows = allData.payment || [];
@@ -2519,52 +2466,252 @@
         return;
       }
       
-      let html = '<table><thead><tr><th>Tentor</th><th>Murid</th><th>Sesi</th><th>Biaya/Sesi</th><th>Total</th></tr></thead><tbody>';
-      rows.forEach(p => {
-        html += `
-          <tr>
-            <td>${escapeHtml(p.tentor)}</td>
-            <td><strong>${escapeHtml(p.murid)}</strong></td>
-            <td><span class="badge">${p.sesi}x</span></td>
-            <td>Rp ${formatNumber(p.biayaPerSesi || 0)}</td>
-            <td><strong style="color:var(--success);">Rp ${formatNumber(p.total)}</strong></td>
-          </tr>`;
-      });
-      html += `
-        <tr style="background:var(--primary-light);">
-          <td colspan="4" style="font-weight:700;color:var(--primary);">TOTAL KESELURUHAN</td>
-          <td style="font-weight:800;color:var(--primary);font-size:15px;">Rp ${formatNumber(meta.grandTotal || 0)}</td>
-        </tr>
-      </tbody></table>`;
-      div.innerHTML = html;
-    }
-    
-    // ============================================================
-    // RENDER LOG
-    // ============================================================
-    function renderLog() {
-      const div = document.getElementById('logTable');
-      if (allData.log.length === 0) {
-        div.innerHTML = `<div class="empty"><div class="empty-icon">${icon('history', 'ico-xl')}</div><h3>Belum Ada Log</h3><p>Log akan tercatat otomatis</p></div>`;
-        return;
-      }
+      const infoBar = `
+        <div style="padding:10px 14px;background:var(--primary-light);border-radius:10px;margin-bottom:14px;font-size:12px;color:var(--primary);display:flex;align-items:center;gap:8px;">
+          ${icon('info', 'ico-sm')}
+          <span>Klik baris untuk melihat detail invoice & mengirim ke wali murid</span>
+        </div>
+      `;
       
-      let html = '<table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Before</th><th>After</th></tr></thead><tbody>';
-      allData.log.slice(0, 50).forEach(l => {
-        html += `
-          <tr>
-            <td>${l.tanggal}</td>
-            <td><span class="badge">${escapeHtml(l.jenisEdit)}</span></td>
-            <td>${escapeHtml(l.beforeEdit) || '-'}</td>
-            <td>${escapeHtml(l.afterEdit) || '-'}</td>
-          </tr>`;
+      let html = infoBar + '<table><thead><tr><th>Tentor</th><th>Murid</th><th>Sesi</th><th>Biaya/Sesi</th><th>Total</th><th style="width:40px;"></th></tr></thead><tbody>';
+      
+      rows.forEach((p, i) => {
+        html += `<tr class="clickable-row" onclick="openInvoice(${i})">
+          <td>${escapeHtml(p.tentor)}</td>
+          <td><strong>${escapeHtml(p.murid)}</strong></td>
+          <td><span class="badge">${p.sesi}x</span></td>
+          <td>Rp ${formatNumber(p.biayaPerSesi || 0)}</td>
+          <td><strong style="color:var(--success);">Rp ${formatNumber(p.total)}</strong></td>
+          <td style="text-align:right;color:var(--text-muted);">${icon('chevron-right', 'ico-sm')}</td>
+        </tr>`;
       });
-      html += '</tbody></table>';
+      
+      html += `<tr style="background:var(--primary-light);">
+        <td colspan="4" style="font-weight:700;color:var(--primary);">TOTAL KESELURUHAN</td>
+        <td style="font-weight:800;color:var(--primary);font-size:15px;">Rp ${formatNumber(meta.grandTotal || 0)}</td>
+        <td></td>
+      </tr></tbody></table>`;
+      
       div.innerHTML = html;
     }
     
     // ============================================================
-    // MODAL
+    // INVOICE
+    // ============================================================
+    function openInvoice(index) {
+      const p = allData.payment[index];
+      const meta = allData.paymentMeta || {};
+      if (!p) return;
+      
+      const absensiList = allData.absensi.filter(a => {
+        if (a.namaTentor !== p.tentor || a.namaMurid !== p.murid) return false;
+        if (!a.tanggalLes) return false;
+        const d = new Date(a.tanggalLes);
+        return d.getMonth() === meta.month && d.getFullYear() === meta.year;
+      }).sort((a, b) => new Date(a.tanggalLes) - new Date(b.tanggalLes));
+      
+      const muridInfo = allData.murid.find(m => m.namaMurid === p.murid) || {};
+      const biayaPerSesi = Number(muridInfo.biaya) || 0;
+      
+      currentInvoice = {
+        tentor: p.tentor,
+        murid: p.murid,
+        muridInfo: muridInfo,
+        absensiList: absensiList,
+        biayaPerSesi: biayaPerSesi,
+        total: biayaPerSesi * absensiList.length,
+        periode: meta.label,
+        month: meta.month,
+        year: meta.year
+      };
+      
+      const body = document.getElementById('invoiceBody');
+      body.innerHTML = buildInvoiceHTML(currentInvoice);
+      document.getElementById('invoiceOverlay').classList.add('active');
+    }
+    
+    function buildInvoiceHTML(inv) {
+      const tglFmt = (str) => {
+        const d = new Date(str);
+        if (isNaN(d.getTime())) return str;
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      };
+      
+      let rows = '';
+      inv.absensiList.forEach((a, i) => {
+        rows += `<tr>
+          <td>${i + 1}</td>
+          <td>${tglFmt(a.tanggalLes)}</td>
+          <td>${escapeHtml(a.tipeLes || '-')}</td>
+          <td>${escapeHtml(a.kendala) || '-'}</td>
+          <td>Rp ${formatNumber(inv.biayaPerSesi)}</td>
+        </tr>`;
+      });
+      
+      return `
+        <div class="invoice-paper" id="invoicePaper">
+          <div class="invoice-header">
+            <div class="invoice-brand">
+              <div class="invoice-brand-logo">${icon('book', 'ico-lg')}</div>
+              <div class="invoice-brand-text">
+                <strong>Intha Learning</strong>
+                <small>Bimbel Manager</small>
+              </div>
+            </div>
+            <div class="invoice-badge">Invoice</div>
+          </div>
+          
+          <div class="invoice-body">
+            <div class="invoice-info-grid">
+              <div class="invoice-info-item">
+                <label>Tentor</label>
+                <div>${escapeHtml(inv.tentor)}</div>
+              </div>
+              <div class="invoice-info-item">
+                <label>Murid</label>
+                <div>${escapeHtml(inv.murid)}</div>
+              </div>
+              <div class="invoice-info-item">
+                <label>Kelas</label>
+                <div>${escapeHtml(inv.muridInfo.kelas) || '-'}</div>
+              </div>
+              <div class="invoice-info-item">
+                <label>Periode</label>
+                <div>${inv.periode}</div>
+              </div>
+            </div>
+            
+            <table class="invoice-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Tanggal</th>
+                  <th>Tipe</th>
+                  <th>Kendala</th>
+                  <th>Biaya</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+            
+            <div class="invoice-total">
+              <div class="invoice-total-label">Total Pembayaran</div>
+              <div class="invoice-total-value">Rp ${formatNumber(inv.total)}</div>
+            </div>
+            
+            <div style="margin-top:14px;font-size:11px;color:var(--text-muted);text-align:center;line-height:1.6;">
+              ${inv.absensiList.length} sesi × Rp ${formatNumber(inv.biayaPerSesi)}<br>
+              Terima kasih atas kepercayaannya 🙏
+            </div>
+          </div>
+          
+          <div class="invoice-footer-note">
+            Dicetak pada ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </div>
+        </div>
+        
+        <div class="invoice-actions">
+          <button class="btn btn-secondary" onclick="downloadInvoice()">
+            ${icon('download', 'ico-sm')} Download Gambar
+          </button>
+          <button class="btn btn-whatsapp" onclick="shareWhatsApp()">
+            ${icon('whatsapp', 'ico-sm')} Kirim ke WhatsApp
+          </button>
+        </div>
+      `;
+    }
+    
+    async function downloadInvoice() {
+      const paper = document.getElementById('invoicePaper');
+      if (!paper) return;
+      
+      showToast('Menyiapkan gambar...', 'success');
+      
+      try {
+        const canvas = await html2canvas(paper, {
+          scale: 2,
+          backgroundColor: '#FFFFFF',
+          useCORS: true,
+          logging: false
+        });
+        
+        const link = document.createElement('a');
+        link.download = `Invoice_${currentInvoice.murid}_${currentInvoice.periode.replace(' ', '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        showToast('Gambar berhasil didownload!', 'success');
+      } catch (error) {
+        showToast('Gagal membuat gambar: ' + error.message, 'error');
+      }
+    }
+    
+    async function shareWhatsApp() {
+      const paper = document.getElementById('invoicePaper');
+      if (!paper) return;
+      
+      showToast('Menyiapkan gambar...', 'success');
+      
+      try {
+        const canvas = await html2canvas(paper, {
+          scale: 2,
+          backgroundColor: '#FFFFFF',
+          useCORS: true,
+          logging: false
+        });
+        
+        canvas.toBlob(async (blob) => {
+          const fileName = `Invoice_${currentInvoice.murid}_${currentInvoice.periode.replace(' ', '_')}.png`;
+          
+          if (navigator.share && navigator.canShare) {
+            const file = new File([blob], fileName, { type: 'image/png' });
+            
+            if (navigator.canShare({ files: [file] })) {
+              try {
+                await navigator.share({
+                  files: [file],
+                  title: 'Invoice Pembayaran',
+                  text: `Invoice untuk ${currentInvoice.murid} - ${currentInvoice.periode}`
+                });
+                showToast('Berhasil dibagikan!', 'success');
+                return;
+              } catch (err) {
+                if (err.name !== 'AbortError') console.error(err);
+              }
+            }
+          }
+          
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = fileName;
+          link.click();
+          
+          setTimeout(() => {
+            const text = encodeURIComponent(
+              `Assalamualaikum, berikut invoice les ${currentInvoice.murid} periode ${currentInvoice.periode}.\n\n` +
+              `Jumlah sesi: ${currentInvoice.absensiList.length}\n` +
+              `Biaya per sesi: Rp ${formatNumber(currentInvoice.biayaPerSesi)}\n` +
+              `Total: Rp ${formatNumber(currentInvoice.total)}\n\n` +
+              `Gambar invoice sudah terdownload, silakan lampirkan di chat ini ya 🙏`
+            );
+            window.open('https://wa.me/?text=' + text, '_blank');
+          }, 500);
+          
+          showToast('Gambar didownload, WhatsApp dibuka', 'success');
+        }, 'image/png');
+      } catch (error) {
+        showToast('Gagal: ' + error.message, 'error');
+      }
+    }
+    
+    function closeInvoice() {
+      document.getElementById('invoiceOverlay').classList.remove('active');
+      currentInvoice = null;
+    }
+    
+    // ============================================================
+    // CRUD MODAL
     // ============================================================
     function openAddModal(type) {
       if (type === 'absensi') {
@@ -2811,13 +2958,8 @@
       }, 3500);
     }
     
-    function formatNumber(n) {
-      return (Number(n) || 0).toLocaleString('id-ID');
-    }
-    
-    function capitalize(s) {
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
+    function formatNumber(n) { return (Number(n) || 0).toLocaleString('id-ID'); }
+    function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
     
     function escapeHtml(s) {
       if (s === null || s === undefined) return '';
